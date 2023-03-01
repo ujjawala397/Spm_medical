@@ -6,6 +6,17 @@ import * as Yup from 'yup';
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import {
+  registerDoctor,
+  registerNurse,
+  registerPatient,
+  logout,
+  getPatientListAdmin,
+  getNurseListAdmin,
+  getDoctorListAdmin,
+  getReport,
+} from "../../api/Api";
+
 
 const Page = () => {
   const router = useRouter();
@@ -144,7 +155,23 @@ const Page = () => {
                 sx={{ mt: 3 }}
                 type="submit"
                 variant="contained"
-              >
+                onClick={() => registerPatient(
+                  "123456789",
+                  "Farheen",
+                  "Farheen",
+                  "F",
+                  "J",
+                  "f.j@gmail.com",
+                  "1999-03-01",
+                  "Farheen",
+                  "Montreal",
+                  "patient"
+                ).then(async function (response) {
+                  if (response.token) {
+                    console.log("Register UI response: " + response)
+                  } else window.alert(response.message);
+                })
+                }>
                 Continue
               </Button>
             </form>

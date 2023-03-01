@@ -1,6 +1,18 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  registerDoctor,
+  registerNurse,
+  registerPatient,
+  logout,
+  getPatientListAdmin,
+  getNurseListAdmin,
+  getDoctorListAdmin,
+  getReport,
+} from "../api/Api";
+
+
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
@@ -151,8 +163,15 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const signUp = async (email, name, password) => {
-    throw new Error('Sign up is not implemented');
+  const signUp = async (phonenumber, password, repassword, firstname, lastname, email, birth, username, address, roles) => {
+    try {
+      let response = await registerPatient(phonenumber, password, repassword, firstname, lastname, email, birth, username, address, roles)
+      console.log("signUp1: " + response)
+      return response;
+    } catch(err) {
+      console.log("signUp2: " + response)
+      return ({"empty": ""})
+    }
   };
 
   const signOut = () => {

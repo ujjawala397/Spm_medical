@@ -3,52 +3,108 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Link, Stack, TextField, Typography, Select, MenuItem, Divider, IconButton, InputAdornment, Visibility, VisibilityOff, InputLabel, FormControl } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import { useState } from 'react';
 
-const Page = () => {
+
+const Page = ({}) => {
   const router = useRouter();
   const auth = useAuth();
+
   const formik = useFormik({
     initialValues: {
+      username: '',
+      firstName: '',
+      lastName: '',
+      roles: 'patient',
+      phoneNumber: '',
       email: '',
-      name: '',
       password: '',
+      passwordConfirmation: '',
+      phoneNumber: '',
+      birthDate: '',
+      address: '',
       submit: null
     },
     validationSchema: Yup.object({
+      firstName: Yup
+        .string()
+        .max(255)
+        .required('First Name is required'),
+      lastName: Yup
+        .string()
+        .max(255)
+        .required('Last Name is required'),
+      username: Yup
+        .string()
+        .max(255)
+        .required('Username is required'),
       email: Yup
         .string()
         .email('Must be a valid email')
         .max(255)
         .required('Email is required'),
-      name: Yup
-        .string()
-        .max(255)
-        .required('Name is required'),
+      phoneNumber: Yup
+        .number()
+        .required('Phone number is required'),
       password: Yup
         .string()
         .max(255)
-        .required('Password is required')
+        .required('Password is required'),
+      passwordConfirmation: Yup
+        .string()
+        .max(255)
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Password Confirmation is required'),
+      birthDate: Yup.date()
+        .max(new Date(), 'Birth date cannot be in the future')
+        .required('Birth date is required'),
+      address: Yup
+        .string()
+        .max(255)
+        .required('Address is required'),
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signUp(values.email, values.name, values.password);
-        router.push('/');
+        const response = await auth.signUp(values.phoneNumber, values.password, values.passwordConfirmation, values.firstName, values.lastName, values.email, values.birthDate, values.username, values.address, values.roles); 
+        console.log("Response: " + JSON.stringify(response))
+        if(response!= null && response != {} && response.Token != null){
+          console.log("Token response: " + JSON.stringify(response.Token))
+          router.push('/');
+        }
+        else if(response!= null && response != {} && response.Failure != null){
+          console.log("Failure: " + response.Failure)
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: response.Failure });
+          helpers.setSubmitting(false);
+        }
+        else {
+          console.log("Random: " + JSON.stringify(response))
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: "Something went wrong" });
+          helpers.setSubmitting(false);
+        }
       } catch (err) {
+        console.log("Random2: " + JSON.stringify(response))
         helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
+        helpers.setErrors({ submit: "Something went wrong" });
         helpers.setSubmitting(false);
       }
     }
   });
 
+  const handleClickShowPassword = () => {
+    setState({ ...state, showPassword: !formik.values.showPassword });
+  };
+  
+
   return (
     <>
       <Head>
         <title>
-          Register | Devias Kit
+          Register | Medical Web Assistant
         </title>
       </Head>
       <Box
@@ -96,16 +152,48 @@ const Page = () => {
               onSubmit={formik.handleSubmit}
             >
               <Stack spacing={3}>
-                <TextField
-                  error={!!(formik.touched.name && formik.errors.name)}
+              <TextField
+                  error={!!(formik.touched.username && formik.errors.username)}
                   fullWidth
-                  helperText={formik.touched.name && formik.errors.name}
-                  label="Name"
-                  name="name"
+                  helperText={formik.touched.username && formik.errors.username}
+                  label="Username"
+                  name="username"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.name}
+                  value={formik.values.username}
                 />
+                <TextField
+                  error={!!(formik.touched.firstName && formik.errors.firstName)}
+                  fullWidth
+                  helperText={formik.touched.firstName && formik.errors.firstName}
+                  label="First Name"
+                  name="firstName"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.firstName}
+                />
+                <TextField
+                  error={!!(formik.touched.lastName && formik.errors.lastName)}
+                  fullWidth
+                  helperText={formik.touched.lastName && formik.errors.lastName}
+                  label="Last Name"
+                  name="lastName"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.lastName}
+                />
+                <FormControl>
+                  <InputLabel id="my-select-label">Select your role</InputLabel>
+                  <Select
+                    labelId="option-label"
+                    name="roles"
+                    onChange={formik.handleChange}
+                  >
+                    <MenuItem value="patient">Patient</MenuItem>
+                    <MenuItem value="counselor">Counselor</MenuItem>
+                    <MenuItem value="doctor">Doctor</MenuItem>
+                  </Select>             
+                </FormControl>
                 <TextField
                   error={!!(formik.touched.email && formik.errors.email)}
                   fullWidth
@@ -124,10 +212,64 @@ const Page = () => {
                   label="Password"
                   name="password"
                   onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="password"
+                  type={formik.values.showPassword ? 'text' : 'password'}
                   value={formik.values.password}
+                  onChange={formik.handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                       
+                      </InputAdornment>
+                    ),
+                  }}
                 />
+                <TextField
+                  error={!!(formik.touched.passwordConfirmation && formik.errors.passwordConfirmation)}
+                  fullWidth
+                  helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
+                  label="Confirm Password"
+                  name="passwordConfirmation"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type={formik.values.showConfirmPassword ? 'text' : 'password'}
+                  value={formik.values.passwordConfirmation}
+                />
+                <TextField
+                  error={!!(formik.touched.phoneNumber && formik.errors.phoneNumber)}
+                  fullWidth
+                  helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                  label="Phone Number"
+                  name="phoneNumber"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="phoneNumber"
+                  value={formik.values.phoneNumber}
+                />
+                <TextField
+                  error={!!(formik.touched.birthDate && formik.errors.birthDate)}
+                  fullWidth
+                  helperText={formik.touched.birthDate && formik.errors.birthDate}
+                  name="birthDate"
+                  label="Date of Birth"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="date"
+                  value={formik.values.birthDate}
+                />
+                <TextField
+                  error={!!(formik.touched.address && formik.errors.address)}
+                  fullWidth
+                  helperText={formik.touched.address && formik.errors.address}
+                  label="Complete Address"
+                  name="address"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.address}
+                />          
               </Stack>
               {formik.errors.submit && (
                 <Typography
@@ -138,6 +280,31 @@ const Page = () => {
                   {formik.errors.submit}
                 </Typography>
               )}
+             {/* <Button
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                type="submit"
+                variant="contained"
+                onClick={() => registerPatient(
+                  "123456789",
+                  "Farheen",
+                  "Farheen",
+                  "F",
+                  "J",
+                  "f.j@gmail.com",
+                  "1999-03-01",
+                  "Farheen",
+                  "Montreal",
+                  "patient"
+                ).then(async function (response) {
+                  if (response.token) {
+                    console.log("Register UI response: " + response)
+                  } else window.alert(response.message);
+                })
+                }>
+                Register
+              </Button>*/}
               <Button
                 fullWidth
                 size="large"
@@ -145,7 +312,7 @@ const Page = () => {
                 type="submit"
                 variant="contained"
               >
-                Continue
+                Register
               </Button>
             </form>
           </div>

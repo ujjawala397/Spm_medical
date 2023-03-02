@@ -48,7 +48,7 @@ export async function executeRequest(method, url, headers, params, data) {
       }
     });
 
-  if (API_LOG) console.log("API RESPONSE=", response);
+  if (API_LOG) console.log("API RESPONSE==", response);
   return response;
 }
 

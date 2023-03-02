@@ -310,15 +310,16 @@ export function logout() {
   token = null;
 }
 
-export async function loginPatient(email, password) {
+export async function login(email, password) {
+  //email, password
   let responseData;
   let newEmail = email.toLowerCase();
   let data = {
     email: newEmail,
     password,
   };
+  console.log(data)
   responseData = await postRequest(LOGIN, data);
-
   token = await responseData.token;
   return responseData;
 }

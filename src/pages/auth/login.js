@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import { login } from 'src/api/Api';
 
 const Page = () => {
   const router = useRouter();
@@ -176,8 +177,16 @@ const Page = () => {
                   sx={{ mt: 3 }}
                   type="submit"
                   variant="contained"
-                >
-                  Continue
+                  onClick={() => login(
+                    "soroush@gmail.co0m",
+                    "admin12345",
+                  ).then(async function (response) {
+                    if (response.token) {
+                      console.log("Register UI response: " + response)
+                    } else window.alert(response.message);
+                  })
+                  }>
+                  Login
                 </Button>
                 <Button
                   fullWidth

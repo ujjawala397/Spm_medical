@@ -50,7 +50,7 @@ export const items = [
     path: '/assessment',
     icon: (
       <SvgIcon fontSize="small">
-        <CogIcon />
+        <CogIcon /> Hello
       </SvgIcon>
     )
   },

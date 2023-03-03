@@ -9,19 +9,49 @@ const Page = () => {
   const [questions, setQuestions] = useState([
     {
       id: 1,
-      question: 'Who are you?',
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Little interest or pleasure in doing things?',
       provided_answer: ''
     },
     {
       id: 2,
-      question: 'Where are you?',
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling down, depressed or hopless?',
       provided_answer: ''
     },
     {
       id: 3,
-      question: 'How are you?',
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble falling asleep, staying asleep, or sleeping too much?',
       provided_answer: ''
-    }
+    },
+    {
+      id: 4,
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling tired or having little energy?',
+      provided_answer: ''
+    },
+    {
+      id: 5,
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Poor appetite or overeating?',
+      provided_answer: ''
+    },
+    {
+      id: 6,
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling bad about yourself - or that youre a failure or have let yourself or your family down?',
+      provided_answer: ''
+    },
+    {
+      id: 7,
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble concentrating on things, such as reading the newspaper or watching television?',
+      provided_answer: ''
+    },
+    {
+      id: 8,
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Moving or speaking so slowly that other people could have noticed. Or, the opposite - being so fidgety or restless that you have been moving around a lot more than usual?',
+      provided_answer: ''
+    },
+    {
+      id: 9,
+      question: 'Over the past 2 weeks, how often have you been bothered by any of the following problems: Thoughts that you would be better off dead or of hurting yourself in some way?',
+      provided_answer: ''
+    },
   ])
 
   const handleAnswer = (id, ans) => {
@@ -54,7 +84,7 @@ const Page = () => {
         <Grid container>
           <Grid item xs={12} style={{ textAlign: 'center' }}>
             <Typography variant="h4">
-              Questions
+              Assessment
             </Typography>
           </Grid>
           <Grid item xs={12} style={{ marginTop: 20 }}>
@@ -66,12 +96,15 @@ const Page = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button style={{ color: obj.provided_answer && 'Green' }} varient='outlined' onClick={(e) => handleAnswer(obj.id, true)}> Yes </Button>
-                  <Button style={{ color: !obj.provided_answer && 'Red' }} varient='outlined' onClick={(e) => handleAnswer(obj.id, false)}> No </Button>
+                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 1)}> Not At All </Button>
+                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 2)}> Several Days </Button>
+                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 3)}> More THan Half the Days </Button>
+                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 4)}> Nearly Every Day </Button>
                 </Grid>
               </>
             )}
           </Grid>
+          <Button onClick={(e) => console.log("submit")} > Submit</Button>
         </Grid>
       </Box>
     </>

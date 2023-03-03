@@ -7,7 +7,7 @@ export const NURSE_REGISTER = BASE_URL + "/nurses/register";
 export const DOCTOR_REGISTER = BASE_URL + "/doctors/register";
 
 //LOGIN
-export const LOGIN = BASE_URL + "/login";
+export const LOGIN = BASE_URL + "/login/";
 
 //PATIENT
 export const PATIENT_PROFILE = BASE_URL + "/patients/profile";

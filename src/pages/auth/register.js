@@ -161,7 +161,7 @@ const Page = () => {
                   "Farheen",
                   "F",
                   "J",
-                  "f.j@gmail.com",
+                  "u.a@gmail.com",
                   "1999-03-01",
                   "Farheen",
                   "Montreal",

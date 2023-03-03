@@ -10,16 +10,16 @@ import { SvgIcon } from '@mui/material';
 
 export const items = [
   {
-    title: 'Overview',
+    title: 'Manager',
     path: '/',
     icon: (
       <SvgIcon fontSize="small">
-        <ChartBarIcon />
+        <UsersIcon />
       </SvgIcon>
     )
   },
   {
-    title: 'Customers',
+    title: 'Patients',
     path: '/customers',
     icon: (
       <SvgIcon fontSize="small">
@@ -28,16 +28,16 @@ export const items = [
     )
   },
   {
-    title: 'Companies',
-    path: '/companies',
+    title: 'Doctors',
+    path: '/doctors',
     icon: (
       <SvgIcon fontSize="small">
-        <ShoppingBagIcon />
+        <UsersIcon />
       </SvgIcon>
     )
   },
   {
-    title: 'Account',
+    title: 'Counsellor',
     path: '/account',
     icon: (
       <SvgIcon fontSize="small">
@@ -46,8 +46,8 @@ export const items = [
     )
   },
   {
-    title: 'Settings',
-    path: '/settings',
+    title: 'Assessment',
+    path: '/assessment',
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />

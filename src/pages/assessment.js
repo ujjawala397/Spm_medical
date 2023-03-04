@@ -1,11 +1,11 @@
 import Head from 'next/head';
-import { Box, Button, Typography, Grid } from '@mui/material';
+import { Box, Button, Typography, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 
 
 const Page = () => {
-
+  
   const [questions, setQuestions] = useState([
     {
       id: 1,
@@ -66,7 +66,11 @@ const Page = () => {
     console.log(updated_questions)
     setQuestions(updated_questions)
   }
-
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    console.log(formData)
+  }
   return(
     <>
       <Head>
@@ -87,24 +91,39 @@ const Page = () => {
               Assessment
             </Typography>
           </Grid>
-          <Grid item xs={12} style={{ marginTop: 20 }}>
+          <Grid item xs={12} style={{ margin: 40 }}>
             {questions.map((obj) => 
               <>
-                <Grid item xs={12} style={{ textAlign: 'center' }}>
-                  <Typography variant="h6">
-                    {obj.question}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 1)}> Not At All </Button>
-                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 2)}> Several Days </Button>
-                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 3)}> More THan Half the Days </Button>
-                  <Button style={{ color: obj.provided_answer  }} varient='outlined' onClick={(e) => handleAnswer(obj.id, 4)}> Nearly Every Day </Button>
+                <Grid item xs={12} style={{marginBottom:25}} >
+                <b>Q{obj.id}: {obj.question}</b>
+                <br/>
+                
+                        <b style={{color:'grey'}}>Option
+                        <Select style={{height:'40px'}}>
+                        <MenuItem value="Not At All" onClick={(e) => handleAnswer(obj.id, 1)}>Not At All </MenuItem>
+                        <MenuItem value="Several Days" onClick={(e) => handleAnswer(obj.id, 2)}>Several Days</MenuItem>
+                        <MenuItem value="More Than Half the Days" onClick={(e) => handleAnswer(obj.id, 3)}>More Than Half the Days</MenuItem>
+                        <MenuItem value="Nearly Every Day"onClick={(e) => handleAnswer(obj.id, 4)}>Nearly Every Day</MenuItem>
+                        </Select>  
+                        </b>
+                
                 </Grid>
               </>
             )}
+          <form onSubmit={handleSubmit}>
+          <Button 
+            fullWidth
+            onClick={(e) => {
+            let obj = {};            
+            Object.keys(questions).map(function(key, index) {
+              obj[questions[index].question] = questions[index].provided_answer;
+            })
+            console.log(obj);            
+          }}> Submit</Button>
+          </form>
+          
           </Grid>
-          <Button onClick={(e) => console.log("submit")} > Submit</Button>
+          
         </Grid>
       </Box>
     </>

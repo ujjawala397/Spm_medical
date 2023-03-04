@@ -8,7 +8,8 @@ export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
   const auth = useAuth();
-
+  const fullName = window.sessionStorage.getItem('firstName') + " " + window.sessionStorage.getItem('lastName')
+  
   const handleSignOut = useCallback(
     () => {
       onClose?.();
@@ -42,7 +43,7 @@ export const AccountPopover = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          Anika Visser
+          { fullName }
         </Typography>
       </Box>
       <Divider />

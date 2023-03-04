@@ -6,7 +6,6 @@ import { useAuthContext } from 'src/contexts/auth-context';
 export const AuthGuard = (props) => {
   const { children } = props;
   const router = useRouter();
-  const { isAuthenticated } = useAuthContext();
   const ignore = useRef(false);
   const [checked, setChecked] = useState(false);
 
@@ -26,7 +25,7 @@ export const AuthGuard = (props) => {
       }
 
       ignore.current = true;
-
+      let isAuthenticated = window.sessionStorage.getItem('authenticated')
       if (!isAuthenticated) {
         console.log('Not authenticated, redirecting');
         router

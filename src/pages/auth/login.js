@@ -25,8 +25,8 @@ const Page = () => {
   const [method, setMethod] = useState('email');
   const formik = useFormik({
     initialValues: {
-      email: 'farheen@devias.io',
-      password: 'Password123!',
+      email: '',
+      password: '',
       submit: null
     },
     validationSchema: Yup.object({
@@ -42,8 +42,30 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signIn(values.email, values.password);
-        router.push('/');
+        const response = await auth.signIn(values.email, values.password);
+        if(response.Token){
+          console.log("Get info " + response.Token)
+          const information = await auth.getUserInformation(response.Token)
+          if(information){
+            router.push('/');
+          }
+          else {
+            throw new Error('Something went wrong')
+          }
+        }
+        else if(response.Error){
+          console.log('Token not found during login: ' + JSON.stringify(response))
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: response.Error });
+          helpers.setSubmitting(false);
+        }
+        else {
+          console.log('Login API | Unknown Response Received: ' + JSON.stringify(response))
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: 'Something went wrong while fetching your information from the system. Please contact the administrator' });
+          helpers.setSubmitting(false);
+        }
+        
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -71,7 +93,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Login | Devias Kit
+          Login | Medical Line
         </title>
       </Head>
       <Box
@@ -115,22 +137,7 @@ const Page = () => {
                 </Link>
               </Typography>
             </Stack>
-            <Tabs
-              onChange={handleMethodChange}
-              sx={{ mb: 3 }}
-              value={method}
-            >
-              <Tab
-                label="Email"
-                value="email"
-              />
-              <Tab
-                label="Phone Number"
-                value="phoneNumber"
-              />
-            </Tabs>
-            {method === 'email' && (
-              <form
+            <form
                 noValidate
                 onSubmit={formik.handleSubmit}
               >
@@ -158,9 +165,6 @@ const Page = () => {
                     value={formik.values.password}
                   />
                 </Stack>
-                <FormHelperText sx={{ mt: 1 }}>
-                  Optionally you can skip.
-                </FormHelperText>
                 {formik.errors.submit && (
                   <Typography
                     color="error"
@@ -179,38 +183,7 @@ const Page = () => {
                 >
                   Continue
                 </Button>
-                <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  onClick={handleSkip}
-                >
-                  Skip authentication
-                </Button>
-                <Alert
-                  color="primary"
-                  severity="info"
-                  sx={{ mt: 3 }}
-                >
-                  <div>
-                    You can use <b>demo@devias.io</b> and password <b>Password123!</b>
-                  </div>
-                </Alert>
               </form>
-            )}
-            {method === 'phoneNumber' && (
-              <div>
-                <Typography
-                  sx={{ mb: 1 }}
-                  variant="h6"
-                >
-                  Not available in the demo
-                </Typography>
-                <Typography color="text.secondary">
-                  To prevent unnecessary costs we disabled this feature in the demo.
-                </Typography>
-              </div>
-            )}
           </div>
         </Box>
       </Box>

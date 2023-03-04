@@ -1,5 +1,10 @@
+## 0.2.0
+
+- feature: Login
+- feature: Registration
+- maintenance: Removed unnecessary code
 ## 0.1.0
 
-- feature: Medical Web Assistant Setup
+- feature: Medical Line Setup
 
 ### Initial commit

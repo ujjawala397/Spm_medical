@@ -2,16 +2,11 @@ import { createContext, useContext, useEffect, useReducer, useRef } from 'react'
 import PropTypes from 'prop-types';
 
 import {
-  registerDoctor,
-  registerNurse,
-  registerPatient,
+  register,
+  login,
   logout,
-  getPatientListAdmin,
-  getNurseListAdmin,
-  getDoctorListAdmin,
-  getReport,
-} from "../api/Api";
-
+  getUserData,
+} from "../api/api";
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -85,30 +80,9 @@ export const AuthProvider = (props) => {
     initialized.current = true;
 
     let isAuthenticated = false;
-
-    try {
-      isAuthenticated = window.sessionStorage.getItem('authenticated') === 'true';
-    } catch (err) {
-      console.error(err);
-    }
-
-    if (isAuthenticated) {
-      const user = {
-        id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: 'Anika Visser',
-        email: 'anika.visser@devias.io'
-      };
-
-      dispatch({
-        type: HANDLERS.INITIALIZE,
-        payload: user
-      });
-    } else {
-      dispatch({
-        type: HANDLERS.INITIALIZE
-      });
-    }
+    dispatch({
+      type: HANDLERS.INITIALIZE
+    });
   };
 
   useEffect(
@@ -119,75 +93,96 @@ export const AuthProvider = (props) => {
     []
   );
 
-  const skip = () => {
-    try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
-  };
-
   const signIn = async (email, password) => {
-    if (email !== 'demo@devias.io' || password !== 'Password123!') {
-      throw new Error('Please check your email and password');
-    }
-
     try {
-      window.sessionStorage.setItem('authenticated', 'true');
+      let response = await login(email, password)
+      if(response.Token){
+        let information = await getUserInformation(response.Token)
+        if(!information){
+          window.sessionStorage.setItem('informationStatus', false)
+        }
+        return response;
+      }
+      console.log('signIn Function | Unknown Response Received: ' + JSON.stringify(response))
+      return response
     } catch (err) {
-      console.error(err);
+      console.log('signIn Function | Error: ' + JSON.stringify(response))
+      throw new Error(err.message)
     }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
   };
 
-  const signUp = async (phonenumber, password, repassword, firstname, lastname, email, birth, username, address, roles) => {
+  const signUp = async (phonenumber, password, repassword, firstname, lastname, email, birth, username, address, role) => {
     try {
-      let response = await registerPatient(phonenumber, password, repassword, firstname, lastname, email, birth, username, address, roles)
-      console.log("signUp1: " + response)
+      let response = await register(phonenumber, password, repassword, firstname, lastname, email, birth, username, address, role)
+      if(response.Success){
+        window.sessionStorage.setItem('informationStatus', true)
+        window.sessionStorage.setItem('id', "")
+        window.sessionStorage.setItem('firstName', firstname)
+        window.sessionStorage.setItem('lastName', lastname)
+        window.sessionStorage.setItem('phoneNumber', phonenumber)
+        window.sessionStorage.setItem('birthDate', birth)
+        window.sessionStorage.setItem('username', username)
+        window.sessionStorage.setItem('address', address)
+        window.sessionStorage.setItem('role', role)
+        window.sessionStorage.setItem('email', email)
+        window.sessionStorage.setItem('assessmentStatus', false)
+        window.sessionStorage.setItem('role', role)
+        window.sessionStorage.setItem('authenticated', 'true')
+      }
       return response;
     } catch(err) {
-      console.log("signUp2: " + response)
-      return ({"empty": ""})
+      throw new Error(err.message)
     }
   };
 
   const signOut = () => {
+    window.sessionStorage.clear()
     dispatch({
       type: HANDLERS.SIGN_OUT
     });
+  };
+
+  const getUserInformation = async (token) => {
+    try {
+      let userData = await getUserData(token)
+      window.sessionStorage.setItem('informationStatus', true)
+      window.sessionStorage.setItem('id', userData[0].id)
+      window.sessionStorage.setItem('firstName', userData[0].first_name)
+      window.sessionStorage.setItem('lastName', userData[0].last_name)
+      window.sessionStorage.setItem('phoneNumber', userData[0].phonenumber)
+      window.sessionStorage.setItem('birthDate', userData[0].birth)
+      window.sessionStorage.setItem('username', userData[0].username)
+      window.sessionStorage.setItem('address', userData[0].address)
+      window.sessionStorage.setItem('role', userData[0].role)
+      window.sessionStorage.setItem('email', userData[0].email)
+      window.sessionStorage.setItem('assessmentStatus', userData[0].assessment)
+      window.sessionStorage.setItem('role', userData[0].role)
+      window.sessionStorage.setItem('authenticated', 'true')
+      const user = {
+        id: userData.id,
+        avatar: '/assets/avatars/avatar-anika-visser.png',
+        name: userData.first_name + " " + userData.last_name,
+        email: userData.email
+      };
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: user
+      });
+      return true;
+
+    } catch (err) {
+      throw new Error('Something went wrong while fetching your information from the system. Please contact the administrator')
+    }
   };
 
   return (
     <AuthContext.Provider
       value={{
         ...state,
-        skip,
         signIn,
         signUp,
-        signOut
+        signOut,
+        getUserInformation
       }}
     >
       {children}

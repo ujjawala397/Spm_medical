@@ -18,7 +18,7 @@ const Page = ({}) => {
       username: '',
       firstName: '',
       lastName: '',
-      roles: 'patient',
+      role: 'patient',
       phoneNumber: '',
       email: '',
       password: '',
@@ -68,30 +68,29 @@ const Page = ({}) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const response = await auth.signUp(values.phoneNumber, values.password, values.passwordConfirmation, values.firstName, values.lastName, values.email, values.birthDate, values.username, values.address, values.roles); 
+        const response = await auth.signUp(values.phoneNumber, values.password, values.passwordConfirmation, values.firstName, values.lastName, values.email, values.birthDate, values.username, values.address, values.role); 
         console.log("Response: " + JSON.stringify(response))
-        if(response!= null && response != {} && response.Token != null){
-          console.log("Token response: " + JSON.stringify(response.Token))
+        if(response.Token){
+          //store something
           router.push('/');
         }
-        else if(response!= null && response != {} && response.Failure != null){
-          console.log("Failure: " + response.Failure)
+        else if(response.Error){
           helpers.setStatus({ success: false });
-          helpers.setErrors({ submit: response.Failure });
+          helpers.setErrors({ submit: response.Error });
           helpers.setSubmitting(false);
         }
         else {
-          console.log("Random: " + JSON.stringify(response))
+          console.log('Register API | Unknown Response Received: ' + JSON.stringify(response))
           helpers.setStatus({ success: false });
-          helpers.setErrors({ submit: "Something went wrong" });
+          helpers.setErrors({ submit: 'Something went wrong while fetching your information from the system. Please contact the administrator' });
           helpers.setSubmitting(false);
         }
       } catch (err) {
-        console.log("Random2: " + JSON.stringify(response))
         helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: "Something went wrong" });
+        helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
       }
+      
     }
   });
 
@@ -104,7 +103,7 @@ const Page = ({}) => {
     <>
       <Head>
         <title>
-          Register | Medical Web Assistant
+          Register | Medical Line
         </title>
       </Head>
       <Box
@@ -186,7 +185,7 @@ const Page = ({}) => {
                   <InputLabel id="my-select-label">Select your role</InputLabel>
                   <Select
                     labelId="option-label"
-                    name="roles"
+                    name="role"
                     onChange={formik.handleChange}
                   >
                     <MenuItem value="patient">Patient</MenuItem>
@@ -280,31 +279,6 @@ const Page = ({}) => {
                   {formik.errors.submit}
                 </Typography>
               )}
-             {/* <Button
-                fullWidth
-                size="large"
-                sx={{ mt: 3 }}
-                type="submit"
-                variant="contained"
-                onClick={() => registerPatient(
-                  "123456789",
-                  "Farheen",
-                  "Farheen",
-                  "F",
-                  "J",
-                  "f.j@gmail.com",
-                  "1999-03-01",
-                  "Farheen",
-                  "Montreal",
-                  "patient"
-                ).then(async function (response) {
-                  if (response.token) {
-                    console.log("Register UI response: " + response)
-                  } else window.alert(response.message);
-                })
-                }>
-                Register
-              </Button>*/}
               <Button
                 fullWidth
                 size="large"

@@ -7,19 +7,8 @@ const requestType = {
   DELETE: "delete",
 };
 
-const API_LOG = true;
-
-// let token;
-// export function setToken(token) {
-//     token = token;
-// }
-
-// export function clearToken() {
-//     token = null;
-// }
-
 axios.interceptors.request.use((request) => {
-  if (API_LOG) console.log("API request=", request);
+  console.warn("API request=", request);
   return request;
 });
 
@@ -32,30 +21,24 @@ export async function executeRequest(method, url, headers, params, data) {
     data: data,
   })
     .then(async function (response) {
-      if (response.data){
-        console.log("signUp5: " + response.data)
+      if ((response.status == 200 || response.status == 201)  && response.data){
         return response.data;
       }
-      else return response;
+      else
+      { 
+        throw new Error(response.Error)
+      }
     })
     .catch(function (error) {
       if (error.response) {
-        if (API_LOG) 
-        {
-          console.warn("ERROR", error.response.data.Error.Error[0]);
-          return({"Failure" : error.response.data.Error.Error[0]});
-        }
         return error.response.data;
-      } else if (error.request) {
-        if (API_LOG) console.warn("ERROR", error);
-        return {"hey": "hey"};
       } else {
-        if (API_LOG) console.warn("ERROR", "Something went wrong");
-        return {"hey1": "hey1"};
+        console.warn("ERROR", "Something went wrong");
+        return {"ERROR": error};
       }
     });
 
-  if (API_LOG) console.log("API RESPONSE=", response);
+  console.warn("API RESPONSE=", response);
   return response;
 }
 
@@ -76,8 +59,7 @@ export async function getRequest(url) {
 }
 
 export async function getRequestWithHeader(url, token) {
-  let authToken = token;
-  authToken = "Bearer " + token;
+  let authToken = "Token " + token;
   let response = await executeRequest(requestType.GET, url, { Authorization: authToken }, null, null);
   return response;
 }

@@ -81,7 +81,7 @@ const Page = () => {
   };
 
   const handleSubmit = (event) => {
-    console.log(questions);
+    const token = window.sessionStorage.getItem("token");
   };
 
   return (

@@ -143,20 +143,7 @@ const Page = () => {
                   {formik.errors.submit}
                 </Typography>
               )}
-              <Button
-                fullWidth
-                size="large"
-                sx={{ mt: 3 }}
-                type="submit"
-                variant="contained"
-                onClick={() =>
-                  login("soroush@gmail.co0m", "admin12345").then(async function (response) {
-                    if (response.token) {
-                      console.log("Register UI response: " + response);
-                    } else window.alert(response.message);
-                  })
-                }
-              >
+              <Button fullWidth size="large" sx={{ mt: 3 }} type="submit" variant="contained">
                 Login
               </Button>
             </form>

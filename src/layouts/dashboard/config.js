@@ -1,170 +1,18 @@
-import ChartBarIcon from "@heroicons/react/24/solid/ChartBarIcon";
-import CogIcon from "@heroicons/react/24/solid/CogIcon";
-import LockClosedIcon from "@heroicons/react/24/solid/LockClosedIcon";
-import ShoppingBagIcon from "@heroicons/react/24/solid/ShoppingBagIcon";
-import UserIcon from "@heroicons/react/24/solid/UserIcon";
-import UserPlusIcon from "@heroicons/react/24/solid/UserPlusIcon";
-import UsersIcon from "@heroicons/react/24/solid/UsersIcon";
-import XCircleIcon from "@heroicons/react/24/solid/XCircleIcon";
-
-import { SvgIcon } from "@mui/material";
+import {
+  counsellorSidebarItems,
+  doctorSidebarItems,
+  managerSidebarItems,
+  patientSidebarItems,
+} from "./sidebar-maps";
 
 export function getItems(role) {
   if (role === "patient") {
-    return [
-      {
-        title: "Overview",
-        path: "/",
-        icon: (
-          <SvgIcon fontSize="small">
-            <ChartBarIcon />
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Appointments",
-        path: "/appointments",
-        icon: (
-          <SvgIcon fontSize="small">
-            <UsersIcon />
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Assessments",
-        path: "/assessments",
-        icon: (
-          <SvgIcon fontSize="small">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
-              ></path>
-            </svg>
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Account",
-        path: "/account",
-        icon: (
-          <SvgIcon fontSize="small">
-            <UserIcon />
-          </SvgIcon>
-        ),
-      },
-    ];
-  } else if (role === "doctor") {
-    return [
-      {
-        title: "Overview",
-        path: "/",
-        icon: (
-          <SvgIcon fontSize="small">
-            <ChartBarIcon />
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Appointments",
-        path: "/appointments",
-        icon: (
-          <SvgIcon fontSize="small">
-            <UsersIcon />
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Assessments",
-        path: "/assessments",
-        icon: (
-          <SvgIcon fontSize="small">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
-              ></path>
-            </svg>
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Account",
-        path: "/account",
-        icon: (
-          <SvgIcon fontSize="small">
-            <UserIcon />
-          </SvgIcon>
-        ),
-      },
-    ];
+    return patientSidebarItems;
   } else if (role === "counsellor") {
-    return [
-      {
-        title: "Overview",
-        path: "/",
-        icon: (
-          <SvgIcon fontSize="small">
-            <ChartBarIcon />
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Appointments",
-        path: "/appointments",
-        icon: (
-          <SvgIcon fontSize="small">
-            <UsersIcon />
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Assessments",
-        path: "/assessments",
-        icon: (
-          <SvgIcon fontSize="small">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
-              ></path>
-            </svg>
-          </SvgIcon>
-        ),
-      },
-      {
-        title: "Account",
-        path: "/account",
-        icon: (
-          <SvgIcon fontSize="small">
-            <UserIcon />
-          </SvgIcon>
-        ),
-      },
-    ];
+    return counsellorSidebarItems;
+  } else if (role === "doctor") {
+    return doctorSidebarItems;
+  } else if (role === "manager") {
+    return managerSidebarItems;
   }
 }

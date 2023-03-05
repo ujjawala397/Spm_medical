@@ -81,7 +81,7 @@ export const SideNav = (props) => {
               m: 0,
             }}
           >
-            {getItems("patient").map((item) => {
+            {getItems(window.sessionStorage.getItem("role")).map((item) => {
               const active = item.path ? pathname === item.path : false;
 
               return (

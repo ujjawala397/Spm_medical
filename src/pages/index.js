@@ -11,7 +11,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Overview | Medical Web Assistant
+        Overview | Medical Line
       </title>
     </Head>
     <Box

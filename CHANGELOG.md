@@ -1,3 +1,6 @@
+## 0.3.0
+
+- Merge Self Assesment page
 ## 0.2.0
 
 - feature: Login

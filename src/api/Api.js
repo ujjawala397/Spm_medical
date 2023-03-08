@@ -7,14 +7,21 @@ import {
   postRequestWithHeader,
 } from "./requestexecutor";
 
-import {
-  REGISTER,
-  LOGIN,
-  USER_DATA,
-} from "./url";
+import { REGISTER, LOGIN, USER_DATA } from "./url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
-export async function register(phonenumber, password, repassword, firstname, lastname, email, birth, username, address, role) {
+export async function register(
+  phonenumber,
+  password,
+  repassword,
+  firstname,
+  lastname,
+  email,
+  birth,
+  username,
+  address,
+  role
+) {
   let responseData;
   let data = {
     phonenumber: phonenumber,
@@ -26,7 +33,7 @@ export async function register(phonenumber, password, repassword, firstname, las
     birth: birth,
     username: username,
     address: address,
-    role: role
+    role: role,
   };
   responseData = await postRequest(REGISTER, data);
   return responseData;
@@ -45,5 +52,5 @@ export async function login(email, password) {
 
 export async function getUserData(token) {
   let responseData = await getRequestWithHeader(USER_DATA, token);
-  return responseData
+  return responseData;
 }

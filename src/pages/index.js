@@ -26,18 +26,7 @@ const Page = () => (
           container
           spacing={3}
         >
-          <Grid
-            xs={12}
-            sm={6}
-            lg={3}
-          >
-            <OverviewBudget
-              difference={12}
-              positive
-              sx={{ height: '100%' }}
-              value="$24k"
-            />
-          </Grid>
+            <>You are now logged in!</>
         </Grid>
       </Container>
     </Box>

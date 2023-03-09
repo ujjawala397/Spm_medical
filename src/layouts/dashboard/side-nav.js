@@ -13,6 +13,8 @@ export const SideNav = (props) => {
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
+  const role = getItems(window.sessionStorage.getItem("role"));
+
   const content = (
     <Scrollbar
       sx={{
@@ -81,21 +83,28 @@ export const SideNav = (props) => {
               m: 0,
             }}
           >
-            {getItems(window.sessionStorage.getItem("role")).map((item) => {
-              const active = item.path ? pathname === item.path : false;
-
-              return (
-                <SideNavItem
-                  active={active}
-                  disabled={item.disabled}
-                  external={item.external}
-                  icon={item.icon}
-                  key={item.title}
-                  path={item.path}
-                  title={item.title}
-                />
-              );
-            })}
+            {
+              role ? (
+                getItems(window.sessionStorage.getItem("role")).map((item) => {
+                  const active = item.path ? pathname === item.path : false;
+    
+                  return (
+                    <SideNavItem
+                      active={active}
+                      disabled={item.disabled}
+                      external={item.external}
+                      icon={item.icon}
+                      key={item.title}
+                      path={item.path}
+                      title={item.title}
+                    />
+                  );
+                })
+              ) : (
+               console.log("Empty")
+              )
+            }
+          
           </Stack>
         </Box>
         <Divider sx={{ borderColor: "neutral.700" }} />

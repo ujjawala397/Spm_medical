@@ -29,7 +29,7 @@ export async function register(
     repassword: repassword,
     firstname: firstname,
     lastname: lastname,
-    email: email.toLowerCase(),
+    email: email,
     birth: birth,
     username: username,
     address: address,
@@ -41,9 +41,8 @@ export async function register(
 
 export async function login(email, password) {
   let responseData;
-  let newEmail = email.toLowerCase();
   let data = {
-    email: newEmail,
+    email: email,
     password,
   };
   responseData = await postRequest(LOGIN, data);

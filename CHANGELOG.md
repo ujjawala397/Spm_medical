@@ -1,6 +1,12 @@
+## 0.3.1
+
+- fix: Signout
+- fix: Manager side bar options
+
 ## 0.3.0
 
-- Merge Self Assesment page
+- feature: Merge Self Assesment page
+
 ## 0.2.0
 
 - feature: Login

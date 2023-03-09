@@ -9,10 +9,13 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { assesmentSubmission } from "src/api/Api";
 import React, { useState } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-
+import { useRouter } from "next/navigation";
 const Page = () => {
+  const router = useRouter();
+
   const [questions, setQuestions] = useState([
     {
       id: 1,
@@ -69,7 +72,12 @@ const Page = () => {
       provided_answer: "",
     },
   ]);
-
+  const obj=questions.reduce((acc,question,key)=>{
+    return({
+      ...acc,
+      [question.question] : question.provided_answer,
+    })
+  },[])
   const handleAnswer = (id, ans) => {
     const updated_questions = questions.map((obj) => {
       if (obj.id === id) {
@@ -78,10 +86,32 @@ const Page = () => {
       return obj;
     });
     setQuestions(updated_questions);
+    // console.log(updated_questions)
   };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    Object.keys(questions).map(function(key, index) {
+      obj[questions[index].question] = questions[index].provided_answer+"";
+    })
+   
+    // console.log(obj);
     const token = window.sessionStorage.getItem("token");
+    // console.log("--------------------")
+    console.log(obj)
+
+    // console.log(questions)
+
+    const post_data = questions.map((obj) => {
+      return { [obj.question]: obj.provided_answer }
+    })
+
+    const res = await assesmentSubmission({data:obj,token})
+    // console.log("Response ")
+    console.log(res)
+    //console.log("final data ")
+    //console.log(post_data);  
+    if (res){
+      router.push('/counsellorReview');
+    }
   };
 
   return (

@@ -41,7 +41,7 @@ const Page = () => {
           console.log("Get info " + response.Token);
           const information = await auth.getUserInformation(response.Token);
           if (information) {
-            router.push("/");
+            router.push("/assessment");
           } else {
             throw new Error("Something went wrong");
           }

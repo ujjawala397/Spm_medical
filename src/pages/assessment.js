@@ -9,10 +9,12 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { assesmentSubmission } from "src/api/Api";
 import React, { useState } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
 const Page = () => {
+  let obj = {}; 
   const [questions, setQuestions] = useState([
     {
       id: 1,
@@ -78,10 +80,30 @@ const Page = () => {
       return obj;
     });
     setQuestions(updated_questions);
+    console.log(updated_questions)
   };
 
-  const handleSubmit = (event) => {
+  
+  const handleSubmit = async (event) => {
+    Object.keys(questions).map(function(key, index) {
+      obj[questions[index].question] = questions[index].provided_answer+"";
+    })
+    console.log(obj);
     const token = window.sessionStorage.getItem("token");
+    console.log("--------------------")
+    console.log(obj)
+
+    console.log(questions)
+
+    const post_data = questions.map((obj) => {
+      return { [obj.question]: obj.provided_answer }
+    })
+
+    const res = await assesmentSubmission({data:JSON.stringify(obj),token})
+    console.log("Response ")
+    console.log(res)
+    console.log("final data ")
+    console.log(post_data);  
   };
 
   return (
@@ -98,8 +120,9 @@ const Page = () => {
       >
         <Grid container>
           <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Typography variant="h4">Assessment</Typography>
+            <Typography variant="h4">Quick Assessment</Typography>
           </Grid>
+
           <Grid item xs={12} style={{ margin: 40 }}>
             {questions.map((obj) => (
               <>
@@ -132,10 +155,15 @@ const Page = () => {
                 </Grid>
               </>
             ))}
-            <Button fullWidth onClick={handleSubmit}>
-              {" "}
-              Submit
-            </Button>
+            {/* <Button 
+            fullWidth
+            onClick={(e) => {
+                       
+                     
+          }}> Submit</Button> */}
+          <Button
+            fullWidth
+            onClick={handleSubmit}> Submit</Button>
           </Grid>
         </Grid>
       </Box>

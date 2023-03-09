@@ -12,7 +12,7 @@ axios.interceptors.request.use((request) => {
   return request;
 });
 
-export async function executeRequest(method, url, headers, params, data) {
+export async function executeRequest({method, url, headers, params, data}) {
   let response = await axios({
     method: method,
     url: url,
@@ -20,11 +20,13 @@ export async function executeRequest(method, url, headers, params, data) {
     params: params,
     data: data,
   })
-    .then(async function (response) {
-      if ((response.status == 200 || response.status == 201) && response.data) {
+    .then(function (response) {
+      if ((response.status == 200 || response.status == 201)  && response.data){
         return response.data;
-      } else {
-        throw new Error(response.Error);
+      }
+      else
+      { 
+        throw new Error(response.Error)
       }
     })
     .catch(function (error) {
@@ -32,7 +34,7 @@ export async function executeRequest(method, url, headers, params, data) {
         return error.response.data;
       } else {
         console.warn("ERROR", "Something went wrong");
-        return { ERROR: error };
+        return {"ERROR": error};
       }
     });
 
@@ -45,15 +47,10 @@ export async function postRequest(url, data) {
   return response;
 }
 export async function postRequestWithHeader(url, data, token) {
-  let authToken = token;
-  authToken = "Bearer " + authToken;
-  let response = await executeRequest(
-    requestType.POST,
-    url,
-    { Authorization: authToken },
-    null,
-    data
-  );
+  console.log("postrequestwithheader")
+  let authToken = "Token " + token;
+  console.log(authToken)
+  let response = await executeRequest({method:requestType['POST'], url, headers:{ Authorization: authToken }, params:null, data: data});
   return response;
 }
 
@@ -64,38 +61,20 @@ export async function getRequest(url) {
 
 export async function getRequestWithHeader(url, token) {
   let authToken = "Token " + token;
-  let response = await executeRequest(
-    requestType.GET,
-    url,
-    { Authorization: authToken },
-    null,
-    null
-  );
+  let response = await executeRequest(requestType.GET, url, { Authorization: authToken }, null, null);
   return response;
 }
 
 export async function putRequest(url, data, token) {
   let authToken = token;
   authToken = "Bearer " + authToken;
-  let response = await executeRequest(
-    requestType.PUT,
-    url,
-    { authorization: authToken },
-    null,
-    data
-  );
+  let response = await executeRequest(requestType.PUT, url, { authorization: authToken }, null, data);
   return response;
 }
 
 export async function deleteRequest(url, token) {
   let authToken = token;
   authToken = "Bearer " + authToken;
-  let response = await executeRequest(
-    requestType.DELETE,
-    url,
-    { authorization: authToken },
-    null,
-    null
-  );
+  let response = await executeRequest(requestType.DELETE, url, { authorization: authToken }, null, null);
   return response;
 }

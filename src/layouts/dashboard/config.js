@@ -8,11 +8,14 @@ import {
 export function getItems(role) {
   if (role === "patient") {
     return patientSidebarItems;
-  } else if (role === "counsellor") {
+  } else if (role === "counselor") {
     return counsellorSidebarItems;
   } else if (role === "doctor") {
     return doctorSidebarItems;
   } else if (role === "manager") {
     return managerSidebarItems;
+  }
+  else {
+    return null
   }
 }

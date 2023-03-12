@@ -7,7 +7,7 @@ import {
   postRequestWithHeader,
 } from "./requestexecutor";
 
-import { REGISTER, LOGIN, USER_DATA,ASSESSMENT } from "./url";
+import { REGISTER, LOGIN, USER_DATA, ASSESSMENT } from "./url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
 export async function register(
@@ -39,11 +39,8 @@ export async function register(
   return responseData;
 }
 
-export async function assesmentSubmission({url=ASSESSMENT,data,token}){
-  // console.log("---------assesment submission------------")
-  // console.log(url)
-  // console.log({token,url,data})
-  const responseData = await postRequestWithHeader(url,data,token);
+export async function assesmentSubmission({ url = ASSESSMENT, data, token }) {
+  const responseData = await postRequestWithHeader(url, data, token);
   return responseData;
 }
 

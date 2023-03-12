@@ -72,12 +72,13 @@ const Page = () => {
       provided_answer: "",
     },
   ]);
-  const obj=questions.reduce((acc,question,key)=>{
-    return({
+  const obj = questions.reduce((acc, question, key) => {
+    return {
       ...acc,
-      [question.question] : question.provided_answer,
-    })
-  },[])
+      [question.question]: question.provided_answer,
+    };
+  }, []);
+
   const handleAnswer = (id, ans) => {
     const updated_questions = questions.map((obj) => {
       if (obj.id === id) {
@@ -86,36 +87,24 @@ const Page = () => {
       return obj;
     });
     setQuestions(updated_questions);
-    // console.log(updated_questions)
   };
-  const handleSubmit = async (event) => {
-    console.log("-----------------------------------")
-    
-    for(let i=0;i<9;i++){
-     if(!questions[i].provided_answer){
-      alert('Please answer all questions')
-      return
-     }
-    }
-    
-    
-    Object.keys(questions).map(function(key, index) {
-      obj[questions[index].question] = questions[index].provided_answer+"";
-    })
-    const token = window.sessionStorage.getItem("token");
-    console.log(obj)
-    const post_data = questions.map((obj) => {
-      return { [obj.question]: obj.provided_answer }
-    })
 
-    const res = await assesmentSubmission({data:obj,token})
-    console.log("Response ")
-    console.log(res)
-    console.log("final data ")
-    console.log(post_data);  
-    if (res){
-      router.push('/counsellorReview');
+  const handleSubmit = async (event) => {
+    for (let i = 0; i < 9; i++) {
+      if (!questions[i].provided_answer) {
+        alert("Please answer all questions");
+        return;
+      }
     }
+    const token = window.sessionStorage.getItem("token");
+    let req = {};
+    for (let i = 0; i < 9; i++) {
+      req[`Question${i + 1}`] = questions[i].provided_answer + "";
+    }
+    console.log(req);
+    const res = await assesmentSubmission({ data: req, token });
+
+    console.log(res);
   };
 
   return (
@@ -130,7 +119,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <form container required >
+        <form container required>
           <Grid item xs={12} style={{ textAlign: "center" }}>
             <Typography variant="h4">Assessment</Typography>
           </Grid>
@@ -146,24 +135,40 @@ const Page = () => {
                   <b style={{ color: "grey" }}>
                     Option
                     <FormControl required>
-                    <Select style={{ height: "40px" }} >
-                      <MenuItem value="Not At All" defaultValue="" required onClick={(e) => handleAnswer(obj.id, 1)}>
-                        Not At All{" "}
-                      </MenuItem>
-                      <MenuItem value="Several Days" defaultValue="" required onClick={(e) => handleAnswer(obj.id, 2)}>
-                        Several Days
-                      </MenuItem>
-                      <MenuItem
-                        defaultValue="" required
-                        value="More Than Half the Days"
-                        onClick={(e) => handleAnswer(obj.id, 3)}
-                      >
-                        More Than Half the Days
-                      </MenuItem>
-                      <MenuItem defaultValue="" required value="Nearly Every Day" onClick={(e) => handleAnswer(obj.id, 4)}>
-                        Nearly Every Day
-                      </MenuItem>
-                    </Select>
+                      <Select style={{ height: "40px" }}>
+                        <MenuItem
+                          value="Not At All"
+                          defaultValue=""
+                          required
+                          onClick={(e) => handleAnswer(obj.id, 1)}
+                        >
+                          Not At All{" "}
+                        </MenuItem>
+                        <MenuItem
+                          value="Several Days"
+                          defaultValue=""
+                          required
+                          onClick={(e) => handleAnswer(obj.id, 2)}
+                        >
+                          Several Days
+                        </MenuItem>
+                        <MenuItem
+                          defaultValue=""
+                          required
+                          value="More Than Half the Days"
+                          onClick={(e) => handleAnswer(obj.id, 3)}
+                        >
+                          More Than Half the Days
+                        </MenuItem>
+                        <MenuItem
+                          defaultValue=""
+                          required
+                          value="Nearly Every Day"
+                          onClick={(e) => handleAnswer(obj.id, 4)}
+                        >
+                          Nearly Every Day
+                        </MenuItem>
+                      </Select>
                     </FormControl>
                   </b>
                 </Grid>

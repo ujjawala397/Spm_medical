@@ -11,7 +11,7 @@ export const LOGIN = BASE_URL + "/login/";
 export const USER_DATA = BASE_URL + "/GetAllDetail";
 
 //Assessment
-export const ASSESSMENT = BASE_URL + "/SelfAssessment";
+export const ASSESSMENT = BASE_URL + "/patient/selfassessment";
 
 //ERROR
 export const ERROR_MSG =

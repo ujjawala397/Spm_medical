@@ -199,7 +199,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Doctors List
+          Counsellors List
         </title>
       </Head>
       <Box
@@ -218,7 +218,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Doctors List
+                  Counsellors List
                 </Typography>
                 <Stack
                   alignItems="center"

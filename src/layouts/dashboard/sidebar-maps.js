@@ -128,7 +128,7 @@ export const managerSidebarItems = [
   },
   {
     title: "Doctor List",
-    path: "/",
+    path: "/doctors",
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />
@@ -137,7 +137,7 @@ export const managerSidebarItems = [
   },
   {
     title: "Counselor List",
-    path: "/",
+    path: "/counsellors",
     icon: (
       <SvgIcon fontSize="small">
         <UserIcon />
@@ -146,7 +146,7 @@ export const managerSidebarItems = [
   },
   {
     title: "Patient List",
-    path: "/",
+    path: "/patients",
     icon: (
       <SvgIcon fontSize="small">
         <UserIcon />

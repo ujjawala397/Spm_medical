@@ -89,26 +89,30 @@ const Page = () => {
     // console.log(updated_questions)
   };
   const handleSubmit = async (event) => {
+    console.log("-----------------------------------")
+    
+    for(let i=0;i<9;i++){
+     if(!questions[i].provided_answer){
+      alert('Please answer all questions')
+      return
+     }
+    }
+    
+    
     Object.keys(questions).map(function(key, index) {
       obj[questions[index].question] = questions[index].provided_answer+"";
     })
-   
-    // console.log(obj);
     const token = window.sessionStorage.getItem("token");
-    // console.log("--------------------")
     console.log(obj)
-
-    // console.log(questions)
-
     const post_data = questions.map((obj) => {
       return { [obj.question]: obj.provided_answer }
     })
 
     const res = await assesmentSubmission({data:obj,token})
-    // console.log("Response ")
+    console.log("Response ")
     console.log(res)
-    //console.log("final data ")
-    //console.log(post_data);  
+    console.log("final data ")
+    console.log(post_data);  
     if (res){
       router.push('/counsellorReview');
     }
@@ -126,7 +130,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Grid container>
+        <form container required >
           <Grid item xs={12} style={{ textAlign: "center" }}>
             <Typography variant="h4">Assessment</Typography>
           </Grid>
@@ -141,23 +145,26 @@ const Page = () => {
 
                   <b style={{ color: "grey" }}>
                     Option
-                    <Select style={{ height: "40px" }}>
-                      <MenuItem value="Not At All" onClick={(e) => handleAnswer(obj.id, 1)}>
+                    <FormControl required>
+                    <Select style={{ height: "40px" }} >
+                      <MenuItem value="Not At All" defaultValue="" required onClick={(e) => handleAnswer(obj.id, 1)}>
                         Not At All{" "}
                       </MenuItem>
-                      <MenuItem value="Several Days" onClick={(e) => handleAnswer(obj.id, 2)}>
+                      <MenuItem value="Several Days" defaultValue="" required onClick={(e) => handleAnswer(obj.id, 2)}>
                         Several Days
                       </MenuItem>
                       <MenuItem
+                        defaultValue="" required
                         value="More Than Half the Days"
                         onClick={(e) => handleAnswer(obj.id, 3)}
                       >
                         More Than Half the Days
                       </MenuItem>
-                      <MenuItem value="Nearly Every Day" onClick={(e) => handleAnswer(obj.id, 4)}>
+                      <MenuItem defaultValue="" required value="Nearly Every Day" onClick={(e) => handleAnswer(obj.id, 4)}>
                         Nearly Every Day
                       </MenuItem>
                     </Select>
+                    </FormControl>
                   </b>
                 </Grid>
               </>
@@ -167,7 +174,7 @@ const Page = () => {
               Submit
             </Button>
           </Grid>
-        </Grid>
+        </form>
       </Box>
     </>
   );

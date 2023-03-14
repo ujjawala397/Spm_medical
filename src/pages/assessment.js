@@ -10,12 +10,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import { assesmentSubmission } from "src/api/Api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { useRouter } from "next/navigation";
+import { getUserData } from "src/api/Api";
 const Page = () => {
   const router = useRouter();
-
+  const [selfAssessmentPending,setSelfAssessmentPending]=useState(false);
   const [questions, setQuestions] = useState([
     {
       id: 1,
@@ -103,10 +104,27 @@ const Page = () => {
     }
     console.log(req);
     const res = await assesmentSubmission({ data: req, token });
-
     console.log(res);
+    if (res){
+      router.push('/counsellorReview');
+    }
   };
 
+
+useEffect(()=>{
+  
+    async function checkAssesmentStatus() {
+    const token = window.sessionStorage.getItem("token");
+    const res=await getUserData(token);
+
+    return res;
+  }
+  checkAssesmentStatus().then((res)=>{
+    console.log(res)
+    setSelfAssessmentPending(res[0].assessment);
+  })
+  },[])
+  
   return (
     <>
       <Head>
@@ -119,7 +137,16 @@ const Page = () => {
           py: 8,
         }}
       >
-        <form container required>
+        <>
+        {(selfAssessmentPending) ? 
+           
+           <Grid item xs={12} style={{ textAlign: "center" }}>
+          <Typography variant="h4">Your file is in progress</Typography>
+        </Grid>
+
+          :
+
+           <form container required>
           <Grid item xs={12} style={{ textAlign: "center" }}>
             <Typography variant="h4">Assessment</Typography>
           </Grid>
@@ -179,12 +206,17 @@ const Page = () => {
               Submit
             </Button>
           </Grid>
-        </form>
+            </form>
+         
+         
+        }
+        
+        
+        </>
       </Box>
     </>
   );
 };
-
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Page;

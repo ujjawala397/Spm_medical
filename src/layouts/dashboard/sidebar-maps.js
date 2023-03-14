@@ -34,6 +34,7 @@ export const patientSidebarItems = [
     icon: (
       <SvgIcon fontSize="small">
         <svg
+          color="blue"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
@@ -128,7 +129,7 @@ export const managerSidebarItems = [
   },
   {
     title: "Doctor List",
-    path: "/",
+    path: "../manager/doctors",
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />
@@ -137,7 +138,7 @@ export const managerSidebarItems = [
   },
   {
     title: "Counselor List",
-    path: "/",
+    path: "../manager/counsellors",
     icon: (
       <SvgIcon fontSize="small">
         <UserIcon />
@@ -146,7 +147,7 @@ export const managerSidebarItems = [
   },
   {
     title: "Patient List",
-    path: "/",
+    path: "../manager/patients",
     icon: (
       <SvgIcon fontSize="small">
         <UserIcon />

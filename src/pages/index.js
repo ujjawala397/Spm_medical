@@ -2,8 +2,7 @@ import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { OverviewBudget } from 'src/sections/overview/overview-budget';
-
+import {  Typography } from "@mui/material";
 const now = new Date();
 
 
@@ -22,12 +21,9 @@ const Page = () => (
       }}
     >
       <Container maxWidth="xl">
-        <Grid
-          container
-          spacing={3}
-        >
-            <>You are now logged in!</>
-        </Grid>
+      <Typography align="center" sx={{ mb: 3 }} variant="h5">
+             You are logged in now
+          </Typography>
       </Container>
     </Box>
   </>

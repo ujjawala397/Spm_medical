@@ -9,10 +9,14 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import { assesmentSubmission } from "src/api/Api";
+import React, { useEffect, useState } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-
+import { useRouter } from "next/navigation";
+import { getUserData } from "src/api/Api";
 const Page = () => {
+  const router = useRouter();
+  const [selfAssessmentPending,setSelfAssessmentPending]=useState(false);
   const [questions, setQuestions] = useState([
     {
       id: 1,
@@ -69,6 +73,12 @@ const Page = () => {
       provided_answer: "",
     },
   ]);
+  const obj = questions.reduce((acc, question, key) => {
+    return {
+      ...acc,
+      [question.question]: question.provided_answer,
+    };
+  }, []);
 
   const handleAnswer = (id, ans) => {
     const updated_questions = questions.map((obj) => {
@@ -80,10 +90,41 @@ const Page = () => {
     setQuestions(updated_questions);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    for (let i = 0; i < 9; i++) {
+      if (!questions[i].provided_answer) {
+        alert("Please answer all questions");
+        return;
+      }
+    }
     const token = window.sessionStorage.getItem("token");
+    let req = {};
+    for (let i = 0; i < 9; i++) {
+      req[`Question${i + 1}`] = questions[i].provided_answer + "";
+    }
+    console.log(req);
+    const res = await assesmentSubmission({ data: req, token });
+    console.log(res);
+    if (res){
+      router.push('/counsellorReview');
+    }
   };
 
+
+useEffect(()=>{
+  
+    async function checkAssesmentStatus() {
+    const token = window.sessionStorage.getItem("token");
+    const res=await getUserData(token);
+
+    return res;
+  }
+  checkAssesmentStatus().then((res)=>{
+    console.log(res)
+    setSelfAssessmentPending(res[0].assessment);
+  })
+  },[])
+  
   return (
     <>
       <Head>
@@ -96,7 +137,16 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Grid container>
+        <>
+        {(selfAssessmentPending) ? 
+           
+           <Grid item xs={12} style={{ textAlign: "center" }}>
+          <Typography variant="h4">Your file is in progress</Typography>
+        </Grid>
+
+          :
+
+           <form container required>
           <Grid item xs={12} style={{ textAlign: "center" }}>
             <Typography variant="h4">Assessment</Typography>
           </Grid>
@@ -111,23 +161,42 @@ const Page = () => {
 
                   <b style={{ color: "grey" }}>
                     Option
-                    <Select style={{ height: "40px" }}>
-                      <MenuItem value="Not At All" onClick={(e) => handleAnswer(obj.id, 1)}>
-                        Not At All{" "}
-                      </MenuItem>
-                      <MenuItem value="Several Days" onClick={(e) => handleAnswer(obj.id, 2)}>
-                        Several Days
-                      </MenuItem>
-                      <MenuItem
-                        value="More Than Half the Days"
-                        onClick={(e) => handleAnswer(obj.id, 3)}
-                      >
-                        More Than Half the Days
-                      </MenuItem>
-                      <MenuItem value="Nearly Every Day" onClick={(e) => handleAnswer(obj.id, 4)}>
-                        Nearly Every Day
-                      </MenuItem>
-                    </Select>
+                    <FormControl required>
+                      <Select style={{ height: "40px" }}>
+                        <MenuItem
+                          value="Not At All"
+                          defaultValue=""
+                          required
+                          onClick={(e) => handleAnswer(obj.id, 1)}
+                        >
+                          Not At All{" "}
+                        </MenuItem>
+                        <MenuItem
+                          value="Several Days"
+                          defaultValue=""
+                          required
+                          onClick={(e) => handleAnswer(obj.id, 2)}
+                        >
+                          Several Days
+                        </MenuItem>
+                        <MenuItem
+                          defaultValue=""
+                          required
+                          value="More Than Half the Days"
+                          onClick={(e) => handleAnswer(obj.id, 3)}
+                        >
+                          More Than Half the Days
+                        </MenuItem>
+                        <MenuItem
+                          defaultValue=""
+                          required
+                          value="Nearly Every Day"
+                          onClick={(e) => handleAnswer(obj.id, 4)}
+                        >
+                          Nearly Every Day
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </b>
                 </Grid>
               </>
@@ -137,12 +206,17 @@ const Page = () => {
               Submit
             </Button>
           </Grid>
-        </Grid>
+            </form>
+         
+         
+        }
+        
+        
+        </>
       </Box>
     </>
   );
 };
-
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Page;

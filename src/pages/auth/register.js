@@ -48,7 +48,7 @@ const Page = ({}) => {
       lastName: Yup.string().max(255).required("Last Name is required"),
       username: Yup.string().max(255).required("Username is required"),
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      phoneNumber: Yup.number().required("Phone number is required"),
+      phoneNumber: Yup.number().required("Phone number is required").min(999999999,"Phone number should be 10 digits").max(10000000000,"Phone number should be 10 digits"),
       password: Yup.string().max(255).required("Password is required"),
       passwordConfirmation: Yup.string()
         .max(255)

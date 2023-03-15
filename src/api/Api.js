@@ -7,7 +7,7 @@ import {
   postRequestWithHeader,
 } from "./requestexecutor";
 
-import { REGISTER, LOGIN, USER_DATA, ASSESSMENT, GET_COUNSELLOR_PATIENTS } from "./url";
+import { REGISTER, LOGIN, USER_DATA, ASSESSMENT, GET_COUNSELLOR_PATIENTS, ALL_SELF_ASSESSMENT, GET_COUNSELLOR_DOCTORS } from "./url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
 export async function register(
@@ -44,6 +44,11 @@ export async function assesmentSubmission({ url = ASSESSMENT, data, token }) {
   return responseData;
 }
 
+export async function getSelfAssessment({ url = ALL_SELF_ASSESSMENT, data, token }) {
+  const responseData = await postRequestWithHeader(url, data, token);
+  return responseData;
+}
+
 export async function login(email, password) {
   let responseData;
   let data = {
@@ -61,5 +66,11 @@ export async function getUserData(token) {
 
 export async function getCounsellorPatients(token) {
   let responseData = await getRequestWithHeader(GET_COUNSELLOR_PATIENTS, token);
+  return responseData;
+}
+
+
+export async function getCounsellorDoctors(token) {
+  let responseData = await getRequestWithHeader(GET_COUNSELLOR_DOCTORS, token);
   return responseData;
 }

@@ -13,10 +13,17 @@ export const USER_DATA = BASE_URL + "/GetAllDetail";
 //Assessment
 export const ASSESSMENT = BASE_URL + "/patient/selfassessment";
 
+//Get all self Assessment
+export const ALL_SELF_ASSESSMENT = BASE_URL + "/getallselfassessment";
+
 //Get All Detail
 export const GET_ALL_DATA = BASE_URL + "/patient/selfassessmentGetAllDetail";
 
 export const GET_COUNSELLOR_PATIENTS = BASE_URL + "/counselor/addappointment/patient";
+
+//Get list of doctors
+export const GET_COUNSELLOR_DOCTORS = BASE_URL + "/counselor/listofdoctors";
+
 //ERROR
 export const ERROR_MSG =
   "Something went wrong while fetching your information from the system. Please contact the Manager";

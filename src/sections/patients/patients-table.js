@@ -15,7 +15,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
-
+import { getSelfAssessment } from "src/api/Api";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 export const PatientsTable = (props) => {
   const {
     count = 0,
@@ -30,8 +32,27 @@ export const PatientsTable = (props) => {
     rowsPerPage = 0,
     selected = [],
   } = props;
-
+  
+  const [email,setEmail]=useState('');
+  const router = useRouter();
+  const handleSubmit = (email) =>{
+    handleEmailSelect(email);
+    handlegetAssessment();
+  }
+  const handleEmailSelect = (email) =>{
+    setEmail(email);
+  }
+  const handlegetAssessment = async (event)=>{
+    const token = window.sessionStorage.getItem("token");
+    console.log(token)
+    const res= await getSelfAssessment({data:email,token})
+    console.log(res)
+    if (res){
+      router.push('/counsellor/assignDoctor');
+    }
+  }
   return (
+    
     <Card>
       <Scrollbar>
         <Box sx={{ minWidth: 800 }}>
@@ -41,6 +62,7 @@ export const PatientsTable = (props) => {
                 <TableCell>First Name</TableCell>
                 <TableCell>Last Name</TableCell>
                 <TableCell>Email</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -51,7 +73,7 @@ export const PatientsTable = (props) => {
                       <TableCell>{patient.Firstname}</TableCell>
                       <TableCell>{patient.Lastname}</TableCell>
                       <TableCell>{patient.Patient}</TableCell>
-                      <TableCell>{patient.address}</TableCell>
+                      <button onClick={() => handleSubmit(patient.Patient)}> Status</button>
                     </TableRow>
                   );
                 }

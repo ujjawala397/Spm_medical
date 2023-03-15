@@ -7,7 +7,7 @@ import {
   postRequestWithHeader,
 } from "./requestexecutor";
 
-import { REGISTER, LOGIN, USER_DATA, ASSESSMENT } from "./url";
+import { REGISTER, LOGIN, USER_DATA, ASSESSMENT, GET_COUNSELLOR_PATIENTS } from "./url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
 export async function register(
@@ -56,5 +56,10 @@ export async function login(email, password) {
 
 export async function getUserData(token) {
   let responseData = await getRequestWithHeader(USER_DATA, token);
+  return responseData;
+}
+
+export async function getCounsellorPatients(token) {
+  let responseData = await getRequestWithHeader(GET_COUNSELLOR_PATIENTS, token);
   return responseData;
 }

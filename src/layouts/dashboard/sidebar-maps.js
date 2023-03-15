@@ -64,8 +64,8 @@ export const counsellorSidebarItems = [
     ),
   },
   {
-    title: "Appointments",
-    path: "/",
+    title: "Patients",
+    path: "/counsellor/patients",
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />
@@ -114,7 +114,7 @@ export const doctorSidebarItems = [
         <UsersIcon />
       </SvgIcon>
     ),
-  }
+  },
 ];
 
 export const managerSidebarItems = [
@@ -153,5 +153,5 @@ export const managerSidebarItems = [
         <UserIcon />
       </SvgIcon>
     ),
-  }
+  },
 ];

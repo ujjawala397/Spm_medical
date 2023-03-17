@@ -5,6 +5,7 @@ import {
   deleteRequest,
   getRequestWithHeader,
   postRequestWithHeader,
+  getRequestWithHeaderData,
 } from "./requestexecutor";
 
 import { REGISTER, LOGIN, USER_DATA, ASSESSMENT, GET_COUNSELLOR_PATIENTS, ALL_SELF_ASSESSMENT, GET_COUNSELLOR_DOCTORS } from "./url";
@@ -45,7 +46,7 @@ export async function assesmentSubmission({ url = ASSESSMENT, data, token }) {
 }
 
 export async function getSelfAssessment({ url = ALL_SELF_ASSESSMENT, data, token }) {
-  const responseData = await postRequestWithHeader(url, data, token);
+  const responseData = await getRequestWithHeaderData(ALL_SELF_ASSESSMENT, data, token);
   return responseData;
 }
 

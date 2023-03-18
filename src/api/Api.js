@@ -46,7 +46,11 @@ export async function assesmentSubmission({ url = ASSESSMENT, data, token }) {
 }
 
 export async function getSelfAssessment({ url = ALL_SELF_ASSESSMENT, data, token }) {
-  const responseData = await getRequestWithHeaderData(ALL_SELF_ASSESSMENT, data, token);
+  data={
+    email:data
+  };
+  console.log({data,url,token})
+  const responseData = await getRequestWithHeaderData(url, data, token);
   return responseData;
 }
 

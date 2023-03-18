@@ -39,13 +39,13 @@ export const PatientsTable = (props) => {
     handleEmailSelect(email);
     handlegetAssessment();
   }
-  const handleEmailSelect = (email) =>{
-    setEmail(email);
+  const handleEmailSelect = (data) =>{
+    setEmail(data);
+    console.log(data)
   }
   const handlegetAssessment = async (event)=>{
     const token = window.sessionStorage.getItem("token");
-    console.log(token)
-    const res= await getSelfAssessment({data:email,token})
+    const res= await getSelfAssessment({data:"ujjawala397@gmail.com",token})
     console.log(res)
     if (res){
       router.push('/counsellor/assignDoctor');

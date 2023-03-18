@@ -1,3 +1,7 @@
+## 0.3.2
+
+- fix: Self assessment status change
+
 ## 0.3.1
 
 - fix: Signout

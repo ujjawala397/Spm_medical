@@ -23,6 +23,22 @@ const Page = () => (
       <Container maxWidth="xl">
       <Typography align="center" sx={{ mb: 3 }} variant="h5">
              You are logged in now
+             <Box
+              sx={{
+              mb: 3,
+              textAlign: "center",
+            }}
+            >
+            <img
+              alt="Under development"
+              src="/assets/doctor.png"
+              style={{
+                display: "inline-block",
+                maxWidth: "100%",
+                width: 400,
+              }}
+            />
+          </Box>
           </Typography>
       </Container>
     </Box>

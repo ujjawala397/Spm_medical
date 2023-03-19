@@ -8,7 +8,17 @@ import {
   getRequestWithHeaderData,
 } from "./requestexecutor";
 
-import { REGISTER, LOGIN, USER_DATA, ASSESSMENT, GET_COUNSELLOR_PATIENTS, ALL_SELF_ASSESSMENT, GET_COUNSELLOR_DOCTORS } from "./url";
+import { REGISTER, 
+        LOGIN, 
+        USER_DATA, 
+        ASSESSMENT, 
+        GET_COUNSELLOR_PATIENTS, 
+        ALL_SELF_ASSESSMENT, 
+        GET_COUNSELLOR_DOCTORS, 
+        COUNSELLOR_GET_ALL_APPOINTMENT, 
+        DOCTOR_GET_ALL_APPOINTMENT,
+        PATIENT_GET_ALL_APPOINTMENT
+       } from "./url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
 export async function register(
@@ -77,5 +87,26 @@ export async function getCounsellorPatients(token) {
 
 export async function getCounsellorDoctors(token) {
   let responseData = await getRequestWithHeader(GET_COUNSELLOR_DOCTORS, token);
+  return responseData;
+}
+
+export async function counsellorGetAllAppointmentByDate(data,token){
+  data={
+    Appointment:"2023-10-10"
+  };
+  let responseData = await getRequestWithHeaderData(COUNSELLOR_GET_ALL_APPOINTMENT, data,token);
+  return responseData;
+}
+
+export async function doctorGetAllAppointmentByDate(data,token){
+  data={
+    Appointment:"2023-10-10"
+  };
+  let responseData = await getRequestWithHeaderData(DOCTOR_GET_ALL_APPOINTMENT, data,token);
+  return responseData;
+}
+
+export async function patientGetAllAppointmentByDate(token){
+  let responseData = await getRequestWithHeader(PATIENT_GET_ALL_APPOINTMENT,token);
   return responseData;
 }

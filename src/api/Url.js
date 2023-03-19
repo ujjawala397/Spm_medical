@@ -24,6 +24,15 @@ export const GET_COUNSELLOR_PATIENTS = BASE_URL + "/counselor/addappointment/pat
 //Get list of doctors
 export const GET_COUNSELLOR_DOCTORS = BASE_URL + "/counselor/listofdoctors";
 
+//Get list of Appointments Counsellor have on selected date
+export const COUNSELLOR_GET_ALL_APPOINTMENT = BASE_URL + "/counselor/details/bydate";
+
+//Get list of Appointments Counsellor have on selected date
+export const DOCTOR_GET_ALL_APPOINTMENT = BASE_URL + "/doctor/details/bydate";
+
+//Get list of Appointments Patient have
+export const PATIENT_GET_ALL_APPOINTMENT = BASE_URL + "/patient/counsellor/getallappointment";
+
 //ERROR
 export const ERROR_MSG =
   "Something went wrong while fetching your information from the system. Please contact the Manager";

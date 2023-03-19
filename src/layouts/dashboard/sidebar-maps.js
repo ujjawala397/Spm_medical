@@ -95,7 +95,7 @@ export const counsellorSidebarItems = [
     ),
   },
   {
-    title: "cdpd 14",
+    title: "Appointments cdpd 14",
     path: "/counsellor/cdpd14",
     icon: (
       <SvgIcon fontSize="small">

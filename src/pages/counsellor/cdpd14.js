@@ -26,7 +26,7 @@ const Page = () => {
       >
         <>
           <Grid item xs={12} style={{ textAlign: "center" }}>
-            <button onClick={handleSubmit}>cdpd14 </button>
+            <button onClick={handleSubmit}>View Appointments (cdpd14) </button>
           </Grid>
         </>
       </Box>

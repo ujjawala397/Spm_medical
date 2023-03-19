@@ -171,6 +171,7 @@ const Page = ({}) => {
                     <MenuItem value="patient">Patient</MenuItem>
                     <MenuItem value="counselor">Counselor</MenuItem>
                     <MenuItem value="doctor">Doctor</MenuItem>
+                    <MenuItem value="manager">Manager</MenuItem>
                   </Select>
                 </FormControl>
                 <TextField

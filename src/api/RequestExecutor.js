@@ -68,6 +68,13 @@ export async function getRequestWithHeader(url, token) {
   );
   return response;
 }
+export async function getRequestWithHeaderData(url, data, token) {
+  console.log({url,token,data})
+  let authToken = "Token " + token;
+  console.log(data)
+  let response = await executeRequest(requestType.GET, url, { Authorization: authToken }, null,  data);
+  return response;
+}
 
 export async function putRequest(url, data, token) {
   let authToken = token;

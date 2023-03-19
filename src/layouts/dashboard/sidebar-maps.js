@@ -64,8 +64,8 @@ export const counsellorSidebarItems = [
     ),
   },
   {
-    title: "Appointments",
-    path: "/",
+    title: "Patients",
+    path: "/counsellor/patients",
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />
@@ -73,8 +73,8 @@ export const counsellorSidebarItems = [
     ),
   },
   {
-    title: "Assessments",
-    path: "/",
+    title: "Assign Doctor",
+    path: "/counsellor/assignDoctor",
     icon: (
       <SvgIcon fontSize="small">
         <svg
@@ -93,6 +93,15 @@ export const counsellorSidebarItems = [
         </svg>
       </SvgIcon>
     ),
+  },
+  {
+      title: "Doctor List",
+      path: "../counsellor/doctors",
+      icon: (
+        <SvgIcon fontSize="small">
+          <UsersIcon />
+        </SvgIcon>
+      ),
   },
 ];
 
@@ -114,7 +123,7 @@ export const doctorSidebarItems = [
         <UsersIcon />
       </SvgIcon>
     ),
-  }
+  },
 ];
 
 export const managerSidebarItems = [
@@ -153,5 +162,5 @@ export const managerSidebarItems = [
         <UserIcon />
       </SvgIcon>
     ),
-  }
+  },
 ];

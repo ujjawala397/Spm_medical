@@ -1,3 +1,7 @@
+## 0.3.3
+
+- feature: Couselor Management
+
 ## 0.3.2
 
 - fix: Self assessment status change

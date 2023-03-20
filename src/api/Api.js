@@ -55,12 +55,10 @@ export async function assesmentSubmission({ url = ASSESSMENT, data, token }) {
   return responseData;
 }
 
-export async function getSelfAssessment({ url = ALL_SELF_ASSESSMENT, data, token }) {
-  data={
-    email:data
-  };
-  console.log({data,url,token})
-  const responseData = await getRequestWithHeaderData(url, data, token);
+export async function getSelfAssessment({url = ALL_SELF_ASSESSMENT, token, email}) {
+  url = url + "?email=" + email 
+  console.log("Request Body : " + url)
+  const responseData = await getRequestWithHeaderData(url, token);
   return responseData;
 }
 
@@ -94,7 +92,7 @@ export async function counsellorGetAllAppointmentByDate(data,token){
   data={
     Appointment:"2023-10-10"
   };
-  let responseData = await getRequestWithHeaderData(COUNSELLOR_GET_ALL_APPOINTMENT, data,token);
+  let responseData = await getRequestWithHeaderData(COUNSELLOR_GET_ALL_APPOINTMENT,token);
   return responseData;
 }
 
@@ -102,7 +100,7 @@ export async function doctorGetAllAppointmentByDate(data,token){
   data={
     Appointment:"2023-10-10"
   };
-  let responseData = await getRequestWithHeaderData(DOCTOR_GET_ALL_APPOINTMENT, data,token);
+  let responseData = await getRequestWithHeaderData(DOCTOR_GET_ALL_APPOINTMENT,token);
   return responseData;
 }
 

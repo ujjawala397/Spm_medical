@@ -88,19 +88,15 @@ export async function getCounsellorDoctors(token) {
   return responseData;
 }
 
-export async function counsellorGetAllAppointmentByDate(data,token){
-  data={
-    Appointment:"2023-10-10"
-  };
-  let responseData = await getRequestWithHeaderData(COUNSELLOR_GET_ALL_APPOINTMENT,token);
+export async function counsellorGetAllAppointmentByDate({url=COUNSELLOR_GET_ALL_APPOINTMENT,date,token}){
+  url=url+"?appointment="+date;
+  let responseData = await getRequestWithHeaderData(url,token);
   return responseData;
 }
 
-export async function doctorGetAllAppointmentByDate(data,token){
-  data={
-    Appointment:"2023-10-10"
-  };
-  let responseData = await getRequestWithHeaderData(DOCTOR_GET_ALL_APPOINTMENT,token);
+export async function doctorGetAllAppointmentByDate({url=DOCTOR_GET_ALL_APPOINTMENT, date,token}){
+  url=url+"?appointment="+date;
+  let responseData = await getRequestWithHeaderData(url,token);
   return responseData;
 }
 

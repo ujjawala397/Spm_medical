@@ -21,7 +21,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Assessment | Medical Web Assistant</title>
+        <title>Doctor Appointments</title>
       </Head>
       <Box
         component="main"

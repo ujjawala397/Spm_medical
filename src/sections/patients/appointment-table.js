@@ -23,12 +23,12 @@ export const AppointmentTable = (props) => {
   
   const router = useRouter();
   
+  let count=0;
   return (  
 
       <Scrollbar sx={{ mb: 3 }}>
               {items.map((appointment) => {
-                let count=0
-                count+=1;
+                count++;
                 if (appointment) {
                   return (
                     <TableRow>

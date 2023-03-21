@@ -48,7 +48,13 @@ export async function postRequestWithHeader(url, data, token) {
   //console.log("postrequestwithheader")
   let authToken = "Token " + token;
   //console.log(authToken)
-  let response = await executeRequest(requestType.POST, url, { Authorization: authToken }, null,  data);
+  let response = await executeRequest(
+    requestType.POST,
+    url,
+    { Authorization: authToken },
+    null,
+    data
+  );
   return response;
 }
 
@@ -68,21 +74,18 @@ export async function getRequestWithHeader(url, token) {
   );
   return response;
 }
-export async function getRequestWithHeaderData(url, data, token) {
-  console.log({url,token,data})
+export async function getRequestWithHeaderData(url, token) {
   let authToken = "Token " + token;
-  // console.log(data)
-  let response = await executeRequest(requestType.GET, url, { Authorization: authToken },data,null);
+  let response = await executeRequest(requestType.GET, url, { Authorization: authToken }, null);
   return response;
 }
 
 export async function putRequest(url, data, token) {
-  let authToken = token;
-  authToken = "Bearer " + authToken;
+  let authToken = "Token " + token;
   let response = await executeRequest(
     requestType.PUT,
     url,
-    { authorization: authToken },
+    { Authorization: authToken },
     null,
     data
   );
@@ -91,7 +94,7 @@ export async function putRequest(url, data, token) {
 
 export async function deleteRequest(url, token) {
   let authToken = token;
-  authToken = "Bearer " + authToken;
+  authToken = "Token " + authToken;
   let response = await executeRequest(
     requestType.DELETE,
     url,

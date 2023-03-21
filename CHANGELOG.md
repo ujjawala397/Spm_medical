@@ -1,3 +1,7 @@
+## 0.3.3
+
+- feature: Couselor Patient Management with Appointment and Rejection
+
 ## 0.3.2
 
 - fix: Self assessment status change

@@ -14,66 +14,12 @@ import React, { useEffect, useState } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { useRouter } from "next/navigation";
 import { getUserData } from "src/api/Api";
+import { selfassessmentresult } from "src/data/selfassessmentmap";
 
 const Page = () => {
   const router = useRouter();
   const [selfAssessmentPending,setSelfAssessmentPending]=useState(false);
-  const [questions, setQuestions] = useState([
-    {
-      id: 1,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Little interest or pleasure in doing things?",
-      provided_answer: "",
-    },
-    {
-      id: 2,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling down, depressed or hopless?",
-      provided_answer: "",
-    },
-    {
-      id: 3,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble falling asleep, staying asleep, or sleeping too much?",
-      provided_answer: "",
-    },
-    {
-      id: 4,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling tired or having little energy?",
-      provided_answer: "",
-    },
-    {
-      id: 5,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Poor appetite or overeating?",
-      provided_answer: "",
-    },
-    {
-      id: 6,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling bad about yourself - or that youre a failure or have let yourself or your family down?",
-      provided_answer: "",
-    },
-    {
-      id: 7,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble concentrating on things, such as reading the newspaper or watching television?",
-      provided_answer: "",
-    },
-    {
-      id: 8,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Moving or speaking so slowly that other people could have noticed. Or, the opposite - being so fidgety or restless that you have been moving around a lot more than usual?",
-      provided_answer: "",
-    },
-    {
-      id: 9,
-      question:
-        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Thoughts that you would be better off dead or of hurting yourself in some way?",
-      provided_answer: "",
-    },
-  ]);
+  const [questions, setQuestions] = useState(selfassessmentresult);
   const obj = questions.reduce((acc, question, key) => {
     return {
       ...acc,

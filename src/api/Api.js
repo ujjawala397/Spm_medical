@@ -19,6 +19,7 @@ import {
   COUNSELLOR_GET_ALL_APPOINTMENT,
   DOCTOR_GET_ALL_APPOINTMENT,
   PATIENT_GET_ALL_APPOINTMENT,
+  COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR,
 } from "./url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
@@ -93,20 +94,32 @@ export async function getCounsellorDoctors(token) {
   return responseData;
 }
 
-export async function counsellorGetAllAppointmentByDate({url=COUNSELLOR_GET_ALL_APPOINTMENT,date,token}){
-  url=url+"?appointment="+date;
-  let responseData = await getRequestWithHeaderData(url,token);
+export async function counsellorGetAllAppointmentByDate({
+  url = COUNSELLOR_GET_ALL_APPOINTMENT,
+  date,
+  token,
+}) {
+  url = url + "?appointment=" + date;
+  let responseData = await getRequestWithHeaderData(url, token);
   return responseData;
 }
 
-
-export async function doctorGetAllAppointmentByDate({url=DOCTOR_GET_ALL_APPOINTMENT, date,token}){
-  url=url+"?appointment="+date;
-  let responseData = await getRequestWithHeaderData(url,token);
+export async function doctorGetAllAppointmentByDate({
+  url = DOCTOR_GET_ALL_APPOINTMENT,
+  date,
+  token,
+}) {
+  url = url + "?appointment=" + date;
+  let responseData = await getRequestWithHeaderData(url, token);
   return responseData;
 }
 
 export async function patientGetAllAppointmentByDate(token) {
   let responseData = await getRequestWithHeader(PATIENT_GET_ALL_APPOINTMENT, token);
+  return responseData;
+}
+
+export async function counsellorAssignPatientToDoctor(data, token) {
+  let responseData = await putRequest(COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR, data, token);
   return responseData;
 }

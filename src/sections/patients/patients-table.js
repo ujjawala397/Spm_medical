@@ -183,6 +183,8 @@ export const PatientsTable = (props) => {
         }
       }
     }
+    setDescription("")
+    setSelectedOption("")
   };
 
   return (

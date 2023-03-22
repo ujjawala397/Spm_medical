@@ -1,6 +1,6 @@
 ## 0.3.3
 
-- feature: Couselor Management
+- feature: Couselor Patient Management with Appointment and Rejection
 
 ## 0.3.2
 

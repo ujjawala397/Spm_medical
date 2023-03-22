@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box,Grid} from "@mui/material";
+import { Button,Box,Grid} from "@mui/material";
 import { patientGetAllAppointmentByDate } from "src/api/Api";
 
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
@@ -32,7 +32,7 @@ const Page = () => {
       >
         <>
           <Grid item xs={12} style={{ textAlign: "center" }}>
-            <button onClick={handleSubmit}>Show appointments </button>
+            <Button onClick={handleSubmit} variant="contained" color="primary">Show appointments </Button>
             <AppointmentTable
               items={appointmentList}
             />

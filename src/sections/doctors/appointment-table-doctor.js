@@ -8,21 +8,23 @@ import { Scrollbar } from "src/components/scrollbar";
 import { useRouter } from "next/navigation";
 export const AppointmentTableDoctor = (props) => {
   const {
-    items = [],
+    items = null,
   } = props;
   
   const router = useRouter();
-  let count=0;
+  if(items && !items.length){
+    return <div>
+    No data found
+  </div>}
 
   return (  
     <Scrollbar sx={{ mb: 3 }}>
-    {items.map((appointment) => {
-      count++;
+    {items?.map((appointment,idx) => {
       if (appointment) {
         return (
           <TableRow>
 
-            <TableCell>{count}</TableCell>
+            <TableCell>{idx+1}</TableCell>
             <TableCell>{appointment.Appointment}</TableCell>  
             <TableCell>{appointment.Counselor}</TableCell>  
             <TableCell>{appointment.Doctor}</TableCell>    

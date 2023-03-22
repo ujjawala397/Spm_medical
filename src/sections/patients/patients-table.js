@@ -172,7 +172,7 @@ export const PatientsTable = (props) => {
         if (response.Error) {
           setErrorMessageAction(response.Error);
           setSuccessMessageAction("");
-        } else if (response.id) {
+        } else if (response.id || response.detail) {
           setErrorMessageAction("");
           setSuccessMessageAction(successMessage);
         } else {

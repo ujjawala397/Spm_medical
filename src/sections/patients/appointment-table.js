@@ -9,7 +9,6 @@ import {
   Container,
   Box
 } from "@mui/material";
-import { Scrollbar } from "src/components/scrollbar";
 import { useRouter } from "next/navigation";
 
 export const AppointmentTable = (props) => {
@@ -17,9 +16,14 @@ export const AppointmentTable = (props) => {
     items = [],
   } = props;
   
-  const router = useRouter();
-  
   let count=0;
+  const router = useRouter();
+  const handleConfirm = () =>{
+    router.push('/patient/confirmation')
+  }
+  const handleReject=()=>{
+    router.push('/patient/rejection')
+  }
   return (  
 
     <Box
@@ -43,10 +47,10 @@ export const AppointmentTable = (props) => {
                       <TableCell><Typography variant="h6">Appointment : {appointment.Appointment}</Typography></TableCell>
                       <TableCell><Typography variant="h6">Assign Doctor : {appointment.AssignDoctor}</Typography></TableCell>
                       <TableCell><Typography variant="h6">{appointment.Desciption}</Typography></TableCell>
-                      <TableCell> <Button onClick={() => handlegetAssessment(index, patient.Patient)} variant="contained" color="primary"> 
+                      <TableCell> <Button onClick={handleConfirm} variant="contained" color="primary"> 
                           Confirm
                         </Button></TableCell>
-                      <TableCell> <Button onClick={() => handlegetAssessment(index, patient.Patient)} variant="contained" color="primary"> 
+                      <TableCell> <Button onClick={handleReject} variant="contained" color="error"> 
                           Reject
                         </Button></TableCell>
                     </TableRow>

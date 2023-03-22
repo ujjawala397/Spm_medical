@@ -94,15 +94,6 @@ export const counsellorSidebarItems = [
       </SvgIcon>
     ),
   },
-  {
-      title: "Doctor List",
-      path: "../counsellor/doctors",
-      icon: (
-        <SvgIcon fontSize="small">
-          <UsersIcon />
-        </SvgIcon>
-      ),
-  },
 ];
 
 export const doctorSidebarItems = [

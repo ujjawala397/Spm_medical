@@ -14,8 +14,8 @@ const Page = () => {
     useEffect(()=>{
       const fetchAppointments = async () => {
         if(date){
-          const token = window.sessionStorage.getItem("token");
-          // const token= "febab8f0f5e9a0a58d99f844981bc82720eca7b8";
+          // const token = window.sessionStorage.getItem("token");
+          const token= "febab8f0f5e9a0a58d99f844981bc82720eca7b8";
           const res = await counsellorGetAllAppointmentByDate({date,token});
           setCounsellorAppointmentList(res);
           console.log(token)

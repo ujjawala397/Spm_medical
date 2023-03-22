@@ -4,16 +4,23 @@ import {
   TableCell,
   TableRow,
   Typography,
-  Box
+  Box,
+  Button
 } from "@mui/material";
 
 import { useRouter } from "next/navigation";
+import { textAlign } from "@mui/system";
 export const AppointmentTableCounsellor = (props) => {
   const {
     items = null,
   } = props;
-  
   const router = useRouter();
+  const handleConfirm=()=>{
+    router.push('/patient/confirmation')
+  } 
+  const handleReject = ()=>{
+    router.push('/patient/rejection')
+  } 
   if(items && !items.length){
     return <div>
     No data found
@@ -23,7 +30,7 @@ export const AppointmentTableCounsellor = (props) => {
           component="main"
           sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}>
     
     {items?.map((appointment,idx) => {
@@ -38,7 +45,8 @@ export const AppointmentTableCounsellor = (props) => {
             <TableCell><Typography variant="h6">{appointment.Firstname} {appointment.Lastname}</Typography></TableCell>
             <TableCell><Typography variant="h6">{appointment.Patient}</Typography></TableCell>
             <TableCell><Typography variant="h6">{appointment.AssignDoctor}</Typography></TableCell>
-            
+            <TableCell><Button onClick={handleConfirm} variant="contained" color="primary">Confirm</Button></TableCell>
+            <TableCell><Button onClick={handleReject} variant="contained" color="error">Reject</Button></TableCell>
           </TableRow>
             );
             }

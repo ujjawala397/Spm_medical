@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const Page = () => {
     
-    const [appointmentList, setAppointmentList] = useState([]);
+    const [appointmentList, setAppointmentList] = useState(null);
     const handleSubmit =  async (event) => {
         //Patient Get appointment details
         const token = window.sessionStorage.getItem("token");

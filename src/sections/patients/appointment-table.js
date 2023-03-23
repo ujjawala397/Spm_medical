@@ -13,10 +13,10 @@ import { useRouter } from "next/navigation";
 
 export const AppointmentTable = (props) => {
   const {
-    items = [],
+    items = null,
   } = props;
   
-  let count=0;
+
   const router = useRouter();
   const handleConfirm = () =>{
     router.push('/patient/confirmation')
@@ -24,6 +24,11 @@ export const AppointmentTable = (props) => {
   const handleReject=()=>{
     router.push('/patient/rejection')
   }
+  if(items && !items.length){
+    return <div>
+    No data found
+  </div>}
+
   return (  
 
     <Box
@@ -34,13 +39,12 @@ export const AppointmentTable = (props) => {
         }}>
         <Container maxWidth="xl">
       
-              {items.map((appointment) => {
-                count++;
+              {items?.map((appointment,idx) => {
                 if (appointment) {
                   return (
                     
                     <TableRow >
-                      <TableCell><Typography variant="h6">{count}</Typography></TableCell>  
+                      <TableCell><Typography variant="h6">{idx+1}</Typography></TableCell>  
                       <TableCell><Typography variant="h6">Email :{appointment.Patient}</Typography></TableCell>
                       <TableCell><Typography variant="h6">Doctor : {appointment.Doctor}</Typography></TableCell>
                       <TableCell><Typography variant="h6">Counsellor : {appointment.Counsellor}</Typography></TableCell>

@@ -20,8 +20,8 @@ export const patientSidebarItems = [
     ),
   },
   {
-    title: "Appointments(CDPD 19)",
-    path: "/patient/cdpd19",
+    title: "My Appointments",
+    path: "/patient/appointments",
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />

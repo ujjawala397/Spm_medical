@@ -6,7 +6,6 @@ import {
   Typography,
   Box
 } from "@mui/material";
-import { Scrollbar } from "src/components/scrollbar";
 import { useRouter } from "next/navigation";
 export const AppointmentTableDoctor = (props) => {
   const {

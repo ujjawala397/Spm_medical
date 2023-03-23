@@ -20,6 +20,7 @@ import {
   DOCTOR_GET_ALL_APPOINTMENT,
   PATIENT_GET_ALL_APPOINTMENT,
   COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR,
+  DOCTOR_MANAGE_ASSIGNED_PATIENT,
 } from "./url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
@@ -121,5 +122,10 @@ export async function patientGetAllAppointmentByDate(token) {
 
 export async function counsellorAssignPatientToDoctor(data, token) {
   let responseData = await putRequest(COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR, data, token);
+  return responseData;
+}
+
+export async function doctorGetAllAppointment(token){
+  let responseData = await getRequestWithHeader(DOCTOR_MANAGE_ASSIGNED_PATIENT,token);
   return responseData;
 }

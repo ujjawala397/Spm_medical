@@ -108,7 +108,7 @@ export const doctorSidebarItems = [
   },
   {
     title: "Appointments",
-    path: "/",
+    path: "/doctor/appointments",
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />

@@ -27,8 +27,11 @@ export const GET_COUNSELLOR_DOCTORS = BASE_URL + "/counselor/listofdoctors";
 //Get list of Appointments Counsellor have on selected date
 export const COUNSELLOR_GET_ALL_APPOINTMENT = BASE_URL + "/counselor/details/bydate";
 
-//Get list of Appointments Counsellor have on selected date
+//Get list of Appointments Doctor have on selected date
 export const DOCTOR_GET_ALL_APPOINTMENT = BASE_URL + "/doctor/details/bydate";
+
+//Get list of Patient to be managed
+export const DOCTOR_MANAGE_ASSIGNED_PATIENT = BASE_URL + "/doctor/manage/patient";
 
 //Get list of Appointments Patient have
 export const PATIENT_GET_ALL_APPOINTMENT = BASE_URL + "/patient/counsellor/getallappointment";

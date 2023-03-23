@@ -73,7 +73,7 @@ export const counsellorSidebarItems = [
     ),
   },
   {
-    title: "Appointments cdpd 14",
+    title: "Appointments",
     path: "/counsellor/cdpd14",
     icon: (
       <SvgIcon fontSize="small">
@@ -107,7 +107,7 @@ export const doctorSidebarItems = [
     ),
   },
   {
-    title: "Appointments",
+    title: "Patients Assigned",
     path: "/doctor/appointments",
     icon: (
       <SvgIcon fontSize="small">
@@ -116,7 +116,7 @@ export const doctorSidebarItems = [
     ),
   },
   {
-    title: "cdpd 17",
+    title: "Appointments",
     path: "/doctor/cdpd17",
     icon: (
       <SvgIcon fontSize="small">

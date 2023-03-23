@@ -29,7 +29,7 @@ const Page = () => {
         <>
           <Grid item xs={12} style={{ textAlign: "center" }}>
             <Button onClick={handleSubmit}variant="contained" color="primary"> 
-            View Appointments
+            View Assigned Patients
             </Button>
             <DoctorManagePatientTable
               items={doctorAppointmentList}

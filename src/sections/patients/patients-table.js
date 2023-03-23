@@ -26,7 +26,12 @@ import {
 } from "@mui/material";
 
 import { Scrollbar } from "src/components/scrollbar";
-import { getSelfAssessment } from "src/api/Api";
+import {
+  counsellorAssignPatientToDoctor,
+  counsellorGetAllDoctors,
+  getCounsellorDoctors,
+  getSelfAssessment,
+} from "src/api/Api";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { convertToList } from "src/data/selfassessmentmap";
@@ -52,11 +57,12 @@ export const PatientsTable = (props) => {
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
   const [id, setId] = useState("");
+  const [doctors, setDoctors] = useState(["hello"]);
   const [listofQuestions, setList] = useState(new Map([]));
 
   const [openAction, setOpenAction] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [doctor, setDoctor] = useState(false);
+  const [doctor, setDoctor] = useState({});
   const [date, setDate] = useState(null);
   const [description, setDescription] = useState("");
   const [isSaveDisabled, setIsSaveDisabled] = useState(false);
@@ -94,8 +100,10 @@ export const PatientsTable = (props) => {
     setToken(window.sessionStorage.getItem("token"));
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     console.log("Here");
+    setErrorMessageAction("");
+    setSuccessMessageAction("");
     setOpenReport(false);
     setOpenAction(false);
   };
@@ -143,6 +151,27 @@ export const PatientsTable = (props) => {
     } else {
       if (selectedOption === "assign") {
         //TODO: CALL ASSIGN DOCTOR API
+        const req = {
+          id: id,
+          Patient: email,
+          Doctor: doctor.email,
+          Description: "Assigned patient to doctor",
+        };
+        console.log(req);
+        await counsellorAssignPatientToDoctor(req, token).then((res) => {
+          if (res.Error) {
+            setErrorMessageAction(res.Error);
+            setSuccessMessageAction("");
+          } else if (res.id || res.detail) {
+            setErrorMessageAction("");
+            setSuccessMessageAction("Patient assigned successfully!");
+          } else {
+            setErrorMessageAction(
+              "Action Failed. Something went wrong. Please contact the administrator"
+            );
+            setSuccessMessageAction("");
+          }
+        });
       } else {
         let patientStatus = null;
         let successMessage = "";
@@ -183,8 +212,8 @@ export const PatientsTable = (props) => {
         }
       }
     }
-    setDescription("")
-    setSelectedOption("")
+    setDescription("");
+    setSelectedOption("");
   };
 
   return (
@@ -257,7 +286,14 @@ export const PatientsTable = (props) => {
                       </TableCell>
                       <TableCell>
                         <Button
-                          onClick={() => handleClickOpen(patient.Patient, patient.id)}
+                          onClick={async () => {
+                            getCounsellorDoctors(window.sessionStorage.getItem("token")).then(
+                              (val) => {
+                                setDoctors(val);
+                              }
+                            );
+                            handleClickOpen(patient.Patient, patient.id);
+                          }}
                           variant="contained"
                           color="primary"
                         >
@@ -355,16 +391,20 @@ export const PatientsTable = (props) => {
                                 </>
                               )}
                               {selectedOption === "assign" && (
-                                <FormControl>
+                                <FormControl fullWidth>
                                   <InputLabel>Doctor Name</InputLabel>
                                   <Select
-                                    value={doctor ? "Confirmed" : ""}
-                                    onChange={(event) =>
-                                      setDoctor(event.target.value === "Confirmed")
-                                    }
+                                    onChange={(event) => {
+                                      setDoctor(event.target.value);
+                                    }}
                                   >
-                                    <MenuItem value="Confirmed">Confirmed</MenuItem>
-                                    <MenuItem value="Pending">Pending</MenuItem>
+                                    {doctors.map((doctor) => {
+                                      return (
+                                        <MenuItem value={doctor}>
+                                          {doctor.first_name + " " + doctor.last_name}
+                                        </MenuItem>
+                                      );
+                                    })}
                                   </Select>
                                 </FormControl>
                               )}

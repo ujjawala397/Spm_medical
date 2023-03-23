@@ -33,6 +33,7 @@ export const DOCTOR_GET_ALL_APPOINTMENT = BASE_URL + "/doctor/details/bydate";
 //Get list of Appointments Patient have
 export const PATIENT_GET_ALL_APPOINTMENT = BASE_URL + "/patient/counsellor/getallappointment";
 
+export const COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR = BASE_URL + "/counselor/manage/patientdoctor";
 //ERROR
 export const ERROR_MSG =
   "Something went wrong while fetching your information from the system. Please contact the Manager";

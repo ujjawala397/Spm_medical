@@ -6,7 +6,7 @@ import {
   getRequestWithHeader,
   postRequestWithHeader,
   getRequestWithHeaderData,
-} from "./requestexecutor";
+} from "./RequestExecutor";
 
 import {
   REGISTER,
@@ -21,7 +21,7 @@ import {
   PATIENT_GET_ALL_APPOINTMENT,
   COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR,
   DOCTOR_MANAGE_ASSIGNED_PATIENT,
-} from "./url";
+} from "./Url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
 export async function register(

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
 
-import { register, login, logout, getUserData } from "../api/api";
+import { register, login, logout, getUserData } from "../api/Api";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",

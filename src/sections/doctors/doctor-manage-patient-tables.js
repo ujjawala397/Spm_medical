@@ -40,7 +40,6 @@ export const DoctorManagePatientTable = (props) => {
   
   
   const handleClose = async () => {
-    console.log("Here");
     setOpenReport(false);
     setOpenAction(false);
   };
@@ -57,6 +56,10 @@ export const DoctorManagePatientTable = (props) => {
     }
     //TODO ERROR
   };
+
+  const cancelAppointment =async (email)=>{
+    console.log("reject")
+  }
 
   if(items && !items.length){
     return <div>
@@ -83,6 +86,7 @@ export const DoctorManagePatientTable = (props) => {
              <TableCell><Typography variant="h6">{appointment.Patient}</Typography></TableCell>
              <TableCell><Typography variant="h6">{appointment.AssignDoctor}</Typography></TableCell>
              <Button onClick={()=>handlegetAssessment(appointment.Patient)} variant="contained"> View File</Button>
+             <Button onClick={()=>cancelAppointment(appointment.Patient)} variant="contained"> Reject Patient</Button>
              <Dialog
                           BackdropProps={{
                             invisible: true,

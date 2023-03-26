@@ -47,7 +47,7 @@ export const AppointmentTable = (props) => {
                       <TableCell><Typography variant="h6">{idx+1}</Typography></TableCell>  
                       <TableCell><Typography variant="h6">Email :{appointment.Patient}</Typography></TableCell>
                       <TableCell><Typography variant="h6">Doctor : {appointment.Doctor}</Typography></TableCell>
-                      <TableCell><Typography variant="h6">Counsellor : {appointment.Counsellor}</Typography></TableCell>
+                      <TableCell><Typography variant="h6">Counsellor : {appointment.Counselor}</Typography></TableCell>
                       <TableCell><Typography variant="h6">Appointment : {appointment.Appointment}</Typography></TableCell>
                       <TableCell><Typography variant="h6">Assign Doctor : {appointment.AssignDoctor}</Typography></TableCell>
                       <TableCell><Typography variant="h6">{appointment.Desciption}</Typography></TableCell>

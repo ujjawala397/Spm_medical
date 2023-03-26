@@ -475,8 +475,8 @@ export const PatientsTable = (props) => {
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
         page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPage="30"
+        rowsPerPageOptions={[30, 35]}
       />
     </Card>
   );

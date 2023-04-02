@@ -2,27 +2,26 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { getCounsellorDoctors } from "src/api/Api";
+import { getCounsellorDoctors, managerGetAllCounsellors } from "src/api/Api";
 import { CounsellorsTable } from "src/sections/counsellor/counsellors-table";
-
+import { UserAcceptanceTable } from "src/sections/user/user-acceptance-table";
 
 const Page = () => {
-  
-  const [doctorsList, setDoctorsList] = useState([]);
+  const [counsellorsList, setCounsellorsList] = useState([]);
 
   useEffect(() => {
     const getDoctorsList = async () => {
-        const token =window.sessionStorage.getItem("token")
-        console.log(token)
-        return await getCounsellorDoctors(token);
+      const token = window.sessionStorage.getItem("token");
+      console.log(token);
+      return await managerGetAllCounsellors(token);
     };
 
-    getDoctorsList().then((doctors) => {
-      setDoctorsList(doctors);
-      console.log(doctors);
+    getDoctorsList().then((counsellors) => {
+      setCounsellorsList(counsellors);
+      console.log(counsellors);
     });
   }, []);
-  
+
   return (
     <>
       <Head>
@@ -43,9 +42,7 @@ const Page = () => {
                 <Stack alignItems="center" direction="row" spacing={1}></Stack>
               </Stack>
             </Stack>
-            <CounsellorsTable
-              items={doctorsList}
-            />
+            <UserAcceptanceTable items={counsellorsList} />
           </Stack>
         </Container>
       </Box>

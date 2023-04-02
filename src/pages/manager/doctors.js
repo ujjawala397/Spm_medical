@@ -2,19 +2,21 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { getCounsellorDoctors } from "src/api/Api";
+import { getCounsellorDoctors, managerGetAllDoctors } from "src/api/Api";
 import { DoctorsTable } from "src/sections/doctors/doctos-table";
-
+import {
+  DoctorsAcceptanceTable,
+  UserAcceptanceTable,
+} from "src/sections/user/user-acceptance-table";
 
 const Page = () => {
-  
   const [doctorsList, setDoctorsList] = useState([]);
 
   useEffect(() => {
     const getDoctorsList = async () => {
-        const token =window.sessionStorage.getItem("token")
-        console.log(token)
-        return await getCounsellorDoctors(token);
+      const token = window.sessionStorage.getItem("token");
+      console.log(token);
+      return await managerGetAllDoctors(token);
     };
 
     getDoctorsList().then((doctors) => {
@@ -22,7 +24,7 @@ const Page = () => {
       console.log(doctors);
     });
   }, []);
-  
+
   return (
     <>
       <Head>
@@ -43,9 +45,7 @@ const Page = () => {
                 <Stack alignItems="center" direction="row" spacing={1}></Stack>
               </Stack>
             </Stack>
-            <DoctorsTable
-              items={doctorsList}
-            />
+            <UserAcceptanceTable items={doctorsList} />
           </Stack>
         </Container>
       </Box>

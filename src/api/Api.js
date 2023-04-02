@@ -21,6 +21,9 @@ import {
   PATIENT_GET_ALL_APPOINTMENT,
   COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR,
   DOCTOR_MANAGE_ASSIGNED_PATIENT,
+  MANAGER_ACCEPT_REJECT_DOCTORS,
+  MANAGER_ACCEPT_REJECT_COUNSELLORS,
+  MANAGER_ACCEPT_REJECT_PATIENTS,
 } from "./Url";
 
 //------------------------------------------------ALL USERS---------------------------------------------------------------------------------
@@ -125,7 +128,37 @@ export async function counsellorAssignPatientToDoctor(data, token) {
   return responseData;
 }
 
-export async function doctorGetAllAppointment(token){
-  let responseData = await getRequestWithHeader(DOCTOR_MANAGE_ASSIGNED_PATIENT,token);
+export async function doctorGetAllAppointment(token) {
+  let responseData = await getRequestWithHeader(DOCTOR_MANAGE_ASSIGNED_PATIENT, token);
+  return responseData;
+}
+
+export async function managerGetAllDoctors(token) {
+  let responseData = await getRequestWithHeader(MANAGER_ACCEPT_REJECT_DOCTORS, token);
+  return responseData;
+}
+
+export async function managerUpdateDoctorStatus(data, token) {
+  let responseData = await putRequest(MANAGER_ACCEPT_REJECT_DOCTORS, data, token);
+  return responseData;
+}
+
+export async function managerGetAllCounsellors(token) {
+  let responseData = await getRequestWithHeader(MANAGER_ACCEPT_REJECT_COUNSELLORS, token);
+  return responseData;
+}
+
+export async function managerUpdateCounsellorStatus(data, token) {
+  let responseData = await putRequest(MANAGER_ACCEPT_REJECT_COUNSELLORS, data, token);
+  return responseData;
+}
+
+export async function managerGetAllPatients(token) {
+  let responseData = await getRequestWithHeader(MANAGER_ACCEPT_REJECT_PATIENTS, token);
+  return responseData;
+}
+
+export async function managerUpdatePatientStatus(data, token) {
+  let responseData = await putRequest(MANAGER_ACCEPT_REJECT_PATIENTS, data, token);
   return responseData;
 }

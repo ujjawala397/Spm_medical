@@ -53,6 +53,18 @@ export const patientSidebarItems = [
   },
 ];
 
+export const pendingPatientSidebarItems = [
+  {
+    title: "Overview",
+    path: "/",
+    icon: (
+      <SvgIcon fontSize="small">
+        <ChartBarIcon />
+      </SvgIcon>
+    ),
+  },
+];
+
 export const counsellorSidebarItems = [
   {
     title: "Overview",

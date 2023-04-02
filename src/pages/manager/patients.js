@@ -5,7 +5,8 @@ import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { applyPagination } from "src/utils/apply-pagination";
 import { PatientsTable } from "src/sections/patients/patient-manager-table";
-import { getCounsellorPatients } from "src/api/Api";
+import { getCounsellorPatients, managerGetAllPatients } from "src/api/Api";
+import { UserAcceptanceTable } from "src/sections/user/user-acceptance-table";
 
 const now = new Date();
 
@@ -33,7 +34,7 @@ const Page = () => {
 
   useEffect(() => {
     const getPatientList = async () => {
-      return await getCounsellorPatients(window.sessionStorage.getItem("token"));
+      return await managerGetAllPatients(window.sessionStorage.getItem("token"));
     };
 
     getPatientList().then((patients) => {
@@ -70,19 +71,7 @@ const Page = () => {
                 <Stack alignItems="center" direction="row" spacing={1}></Stack>
               </Stack>
             </Stack>
-            <PatientsTable
-              count={data.length}
-              items={patientList}
-              onDeselectAll={patientsSelection.handleDeselectAll}
-              onDeselectOne={patientsSelection.handleDeselectOne}
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={patientsSelection.handleSelectAll}
-              onSelectOne={patientsSelection.handleSelectOne}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              selected={patientsSelection.selected}
-            />
+            <UserAcceptanceTable items={patientList} />
           </Stack>
         </Container>
       </Box>

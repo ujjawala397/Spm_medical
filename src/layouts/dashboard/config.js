@@ -5,11 +5,14 @@ import {
   patientSidebarItems,
   pendingCounsellorSidebarItems,
   pendingDoctorSidebarItems,
+  pendingPatientSidebarItems,
 } from "./sidebar-maps";
 
 export function getItems(role, accept) {
-  if (role === "patient") {
+  if (role === "patient" && accept == "true") {
     return patientSidebarItems;
+  } else if (role === "patient" && accept == "false") {
+    return pendingPatientSidebarItems;
   } else if (role === "counselor" && accept == "false") {
     return pendingCounsellorSidebarItems;
   } else if (role === "counselor" && accept == "true") {

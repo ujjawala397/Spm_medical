@@ -37,6 +37,12 @@ export const DOCTOR_MANAGE_ASSIGNED_PATIENT = BASE_URL + "/doctor/manage/patient
 export const PATIENT_GET_ALL_APPOINTMENT = BASE_URL + "/patient/counsellor/getallappointment";
 
 export const COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR = BASE_URL + "/counselor/manage/patientdoctor";
+
+export const MANAGER_ACCEPT_REJECT_DOCTORS = BASE_URL + "/manager/accept_reject/doctor";
+
+export const MANAGER_ACCEPT_REJECT_COUNSELLORS = BASE_URL + "/manager/accept_reject/counselor";
+
+export const MANAGER_ACCEPT_REJECT_PATIENTS = BASE_URL + "/manger/accept_reject/patient";
 //ERROR
 export const ERROR_MSG =
   "Something went wrong while fetching your information from the system. Please contact the Manager";

@@ -13,7 +13,12 @@ export const SideNav = (props) => {
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-  const role = getItems(window.sessionStorage.getItem("role"));
+  const role = getItems(
+    window.sessionStorage.getItem("role"),
+    window.sessionStorage.getItem("accept")
+  );
+
+  console.log(window.sessionStorage.getItem("accept") == "false");
 
   const content = (
     <Scrollbar
@@ -83,11 +88,13 @@ export const SideNav = (props) => {
               m: 0,
             }}
           >
-            {
-              role ? (
-                getItems(window.sessionStorage.getItem("role")).map((item) => {
+            {role
+              ? getItems(
+                  window.sessionStorage.getItem("role"),
+                  window.sessionStorage.getItem("accept")
+                ).map((item) => {
                   const active = item.path ? pathname === item.path : false;
-    
+
                   return (
                     <SideNavItem
                       active={active}
@@ -100,11 +107,7 @@ export const SideNav = (props) => {
                     />
                   );
                 })
-              ) : (
-               console.log("Empty")
-              )
-            }
-          
+              : console.log("Empty")}
           </Stack>
         </Box>
         <Divider sx={{ borderColor: "neutral.700" }} />

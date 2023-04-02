@@ -143,6 +143,7 @@ export const AuthProvider = (props) => {
         window.sessionStorage.setItem("role", role);
         window.sessionStorage.setItem("authenticated", "true");
         window.sessionStorage.setItem("token", response.Token);
+        window.sessionStorage.setItem("accept", response.accept);
       }
       return response;
     } catch (err) {
@@ -174,6 +175,7 @@ export const AuthProvider = (props) => {
       window.sessionStorage.setItem("role", userData[0].role);
       window.sessionStorage.setItem("authenticated", "true");
       window.sessionStorage.setItem("token", token);
+      window.sessionStorage.setItem("accept", userData[0].accept);
       const user = {
         id: userData.id,
         avatar: "/assets/avatars/avatar-anika-visser.png",

@@ -109,8 +109,8 @@ export const counsellorSidebarItems = [
 ];
 export const pendingCounsellorSidebarItems = [
   {
-    title: "Overview",
-    path: "/",
+    title: "File Status",
+    path: "/counsellor/counsellorStatus",
     icon: (
       <SvgIcon fontSize="small">
         <ChartBarIcon />
@@ -164,8 +164,8 @@ export const doctorSidebarItems = [
 
 export const pendingDoctorSidebarItems = [
   {
-    title: "Overview",
-    path: "/",
+    title: "File Status",
+    path: "/doctor/doctorStatus",
     icon: (
       <SvgIcon fontSize="small">
         <ChartBarIcon />

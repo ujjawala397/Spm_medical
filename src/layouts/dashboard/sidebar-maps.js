@@ -131,7 +131,7 @@ export const doctorSidebarItems = [
   },
   {
     title: "Patients Assigned",
-    path: "/doctor/appointments",
+    path: "/doctor/patients",
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />
@@ -140,7 +140,7 @@ export const doctorSidebarItems = [
   },
   {
     title: "Appointments",
-    path: "/doctor/cdpd17",
+    path: "/doctor/appointments",
     icon: (
       <SvgIcon fontSize="small">
         <svg
@@ -159,7 +159,7 @@ export const doctorSidebarItems = [
         </svg>
       </SvgIcon>
     ),
-  },
+  }
 ];
 
 export const pendingDoctorSidebarItems = [

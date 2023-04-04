@@ -4,8 +4,8 @@ import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/materia
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { applyPagination } from "src/utils/apply-pagination";
-import { PatientsTable } from "src/sections/patients/patients-counselor-table";
-import { getCounsellorPatients } from "src/api/Api";
+import { PatientsTable } from "src/sections/patients/patients-doctor-table";
+import { getDoctorPatients } from "src/api/Api";
 
 const now = new Date();
 
@@ -33,7 +33,7 @@ const Page = () => {
 
   useEffect(() => {
     const getPatientList = async () => {
-      return await getCounsellorPatients(window.sessionStorage.getItem("token"));
+      return await getDoctorPatients(window.sessionStorage.getItem("token"));
     };
 
     getPatientList().then((patients) => {

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Button,Box,Grid,TextField} from "@mui/material";
-import { counsellorGetAllAppointmentByDate } from "src/api/Api";
+import { getAllcounsellorAppointmentByDate } from "src/api/Api";
 import { useState, useEffect } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { AppointmentTableCounsellor } from "src/sections/counsellor/appointment-table-counsellor";
@@ -18,7 +18,7 @@ const Page = () => {
         if(date){
           const token = window.sessionStorage.getItem("token");
           // const token= "febab8f0f5e9a0a58d99f844981bc82720eca7b8";
-          const res = await counsellorGetAllAppointmentByDate({date,token});
+          const res = await getAllcounsellorAppointmentByDate({date,token});
           setCounsellorAppointmentList(res);
           console.log(token)
         }

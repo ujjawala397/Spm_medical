@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Button,Box,Grid} from "@mui/material";
-import { patientGetAllAppointmentByDate } from "src/api/Api";
+import { getAllPatientAppointmentByDate } from "src/api/Api";
 
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { AppointmentTable } from "src/sections/patients/appointment-table";
@@ -14,7 +14,7 @@ const Page = () => {
     const handleSubmit =  async (event) => {
         //Patient Get appointment details
         const token = window.sessionStorage.getItem("token");
-        const res = await patientGetAllAppointmentByDate(token);
+        const res = await getAllPatientAppointmentByDate(token);
         setAppointmentList(res);
         console.log(res);
     }

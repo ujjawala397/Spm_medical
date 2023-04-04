@@ -40,7 +40,6 @@ export const DoctorManagePatientTable = (props) => {
   
   
   const handleClose = async () => {
-    setOpenReport(false);
     setOpenAction(false);
   };
 
@@ -50,7 +49,6 @@ export const DoctorManagePatientTable = (props) => {
     console.log(email + " Email");
     const res = await getSelfAssessment({ token, email });
     if (res) {
-      setOpenReport(true);
       const list = await convertToList(res);
       setList(list);
     }

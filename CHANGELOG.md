@@ -1,3 +1,7 @@
+## 0.3.4
+
+- feature: Doctor patient management
+
 ## 0.3.3
 
 - feature: Couselor Patient Management with Appointment and Rejection

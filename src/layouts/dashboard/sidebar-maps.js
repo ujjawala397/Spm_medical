@@ -86,7 +86,7 @@ export const counsellorSidebarItems = [
   },
   {
     title: "Appointments",
-    path: "/counsellor/appointmentsCounsellor",
+    path: "/counsellor/appointments",
     icon: (
       <SvgIcon fontSize="small">
         <svg

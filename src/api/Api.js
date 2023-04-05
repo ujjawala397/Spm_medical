@@ -24,6 +24,7 @@ import {
   MANAGER_ACCEPT_REJECT_DOCTORS,
   MANAGER_ACCEPT_REJECT_COUNSELLORS,
   MANAGER_ACCEPT_REJECT_PATIENTS,
+  BUSINESS_DATA,
 } from "./Url";
 
 /******************************************** ALL USERS *******************************************/
@@ -146,6 +147,12 @@ export async function getSelfAssessment({ url = ALL_SELF_ASSESSMENT, token, emai
 }
 
 /******************************************** MANAGER *******************************************/
+
+export async function getInsighData(token) {
+  let responseData = await getRequestWithHeader(BUSINESS_DATA, token);
+  console.log("res")
+  return responseData;
+}
 
 export async function managerGetAllDoctors(token) {
   let responseData = await getRequestWithHeader(MANAGER_ACCEPT_REJECT_DOCTORS, token);

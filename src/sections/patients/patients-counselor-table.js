@@ -220,253 +220,275 @@ export const PatientsTable = (props) => {
     <Card>
       <Scrollbar>
         <Box sx={{ minWidth: 800 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>First Name</TableCell>
-                <TableCell>Last Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Self Assessment</TableCell>
-                <TableCell>Assign/Reject/Appointment</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {items.map((patient, index) => {
-                if (!patient.AssigntoDoctor) {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell>{patient.Firstname}</TableCell>
-                      <TableCell>{patient.Lastname}</TableCell>
-                      <TableCell>{patient.Patient}</TableCell>
-                      <TableCell>
-                        <Button
-                          onClick={() => handlegetAssessment(patient.Patient)}
-                          variant="contained"
-                          color="primary"
-                        >
-                          Report
-                        </Button>
-                        {errorMessageReport && (
-                          <Typography color="error" variant="body1">
-                            {errorMessageReport}
-                          </Typography>
-                        )}
-                        <Dialog
-                          BackdropProps={{
-                            invisible: true,
-                            style: { opacity: 1 },
-                          }}
-                          maxWidth="lg"
-                          fullWidth={true}
-                          PaperProps={{
-                            style: {
-                              maxHeight: "90vh",
-                              minHeight: "90vh",
-                            },
-                          }}
-                          open={openReport}
-                          onClose={handleClose}
-                        >
-                          <DialogTitle>Self Assessment Result</DialogTitle>
-                          <DialogContent>
-                            <List>
-                              {Array.from(listofQuestions).map(([question, answer], index) => (
-                                <ListItem key={index}>
-                                  <ListItemText
-                                    primary={question}
-                                    secondary={answer}
-                                    primaryTypographyProps={{ style: styles.primary }}
-                                    secondaryTypographyProps={{ style: styles.secondary }}
-                                  />
-                                </ListItem>
-                              ))}
-                            </List>
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          onClick={async () => {
-                            getCounsellorDoctors(window.sessionStorage.getItem("token")).then(
-                              (val) => {
-                                setDoctors(val);
-                              }
-                            );
-                            handleClickOpen(patient.Patient, patient.id);
-                          }}
-                          variant="contained"
-                          color="primary"
-                        >
-                          Action
-                        </Button>
-                        <Dialog
-                          BackdropProps={{
-                            invisible: true,
-                            style: { opacity: 1 },
-                          }}
-                          maxWidth="sm"
-                          fullWidth={true}
-                          PaperProps={{
-                            style: {
-                              maxHeight: "80vh",
-                              minHeight: "40vh",
-                            },
-                          }}
-                          open={openAction}
-                          onClose={handleClose}
-                        >
-                          <DialogTitle>Pick an action</DialogTitle>
-                          <DialogContent>
-                            <div>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    name="bookAppointment"
-                                    checked={selectedOption === "bookAppointment"}
-                                    onChange={(event) => handleCheckboxChange(event)}
-                                  />
-                                }
-                                label="Book appointment"
-                                style={{ display: "block" }}
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    name="assign"
-                                    checked={selectedOption === "assign"}
-                                    onChange={(event) => handleCheckboxChange(event)}
-                                  />
-                                }
-                                label="Assign a doctor"
-                                style={{ display: "block" }}
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    name="reject"
-                                    checked={selectedOption === "reject"}
-                                    onChange={(event) => handleCheckboxChange(event)}
-                                  />
-                                }
-                                label="Reject"
-                                style={{ display: "block" }}
-                              />
-                              {selectedOption === "bookAppointment" && (
-                                <>
-                                  <TextField
-                                    variant="outlined"
-                                    size="small"
-                                    required
-                                    fullWidth
-                                    margin="normal"
-                                    InputLabelProps={{
-                                      shrink: true,
-                                      style: { marginTop: "0.2rem" },
-                                    }}
-                                    format="yyyy-MM-dd'T'HH:mm"
-                                    value={formattedDateTime}
-                                    inputProps={{ min: minDateTime }}
-                                    label="Date and Time"
-                                    type="datetime-local"
-                                    onChange={(event) => handleDateTimeChange(event)}
-                                  />
-                                  <TextField
-                                    variant="outlined"
-                                    size="small"
-                                    required
-                                    fullWidth
-                                    margin="none"
-                                    multiline
-                                    rows={4}
-                                    value={description}
-                                    label="Description"
-                                    type="description"
-                                    onChange={(event) => {
-                                      setDescription(event.target.value);
-                                      setErrorMessageAction("");
-                                      setErrorMessageReport("");
-                                      setSuccessMessageAction("");
-                                    }}
-                                  />
-                                </>
-                              )}
-                              {selectedOption === "assign" && (
-                                <FormControl fullWidth>
-                                  <InputLabel>Doctor Name</InputLabel>
-                                  <Select
-                                    onChange={(event) => {
-                                      setDoctor(event.target.value);
-                                    }}
-                                  >
-                                    {doctors.map((doctor) => {
-                                      return (
-                                        <MenuItem value={doctor}>
-                                          {doctor.first_name + " " + doctor.last_name}
-                                        </MenuItem>
-                                      );
-                                    })}
-                                  </Select>
-                                </FormControl>
-                              )}
-                              {selectedOption === "reject" && (
-                                <>
-                                  <TextField
-                                    variant="outlined"
-                                    size="small"
-                                    required
-                                    fullWidth
-                                    margin="normal"
-                                    multiline
-                                    rows={4}
-                                    value={description}
-                                    label="Reason for Rejection"
-                                    type="description"
-                                    onChange={(event) => {
-                                      setDescription(event.target.value);
-                                      setErrorMessageReport("");
-                                      setSuccessMessageAction("");
-                                    }}
-                                  />
-                                </>
-                              )}
-                            </div>
+          {items && items.length > 0 ? (
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Self Assessment</TableCell>
+                  <TableCell>Assign/Reject/Appointment</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {items.filter((patient) => patient.Accept == true &&
+                      !patient.AssigntoDoctor &&
+                      !patient.RejectedByPatient && patient.Appointment == null)
+                  .length == 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      No data found
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  items.map((patient, index) => {
+                    if (
+                      patient.Accept &&
+                      !patient.AssigntoDoctor &&
+                      !patient.RejectedByPatient &&
+                      patient.Appointment === null
+                    ) {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{patient.Firstname}</TableCell>
+                          <TableCell>{patient.Lastname}</TableCell>
+                          <TableCell>{patient.Patient}</TableCell>
+                          <TableCell>
                             <Button
-                              sx={{
-                                backgroundColor: "#4CAF50",
-                                color: "#ffffff",
-                                "&:hover": {
-                                  backgroundColor: "#357a38",
-                                },
-                                mr: 2,
-                                mt: 1,
-                              }}
-                              disabled={isSaveDisabled}
-                              onClick={() => handleAction(event, patient.Patient)}
+                              onClick={() => handlegetAssessment(patient.Patient)}
                               variant="contained"
                               color="primary"
-                              margintop="10"
                             >
-                              Save
+                              Report
                             </Button>
-                            {successMessageAction && (
-                              <Typography color="primary" variant="body1" fontWeight="bold">
-                                {successMessageAction}
+                            {errorMessageReport && (
+                              <Typography color="error" variant="body1">
+                                {errorMessageReport}
                               </Typography>
                             )}
-                            {errorMessageAction && (
-                              <Typography color="error" variant="body1" fontWeight="bold">
-                                {errorMessageAction}
-                              </Typography>
-                            )}
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
-                    </TableRow>
-                  );
-                }
-              })}
-            </TableBody>
-          </Table>
+                            <Dialog
+                              BackdropProps={{
+                                invisible: true,
+                                style: { opacity: 1 },
+                              }}
+                              maxWidth="lg"
+                              fullWidth={true}
+                              PaperProps={{
+                                style: {
+                                  maxHeight: "90vh",
+                                  minHeight: "90vh",
+                                },
+                              }}
+                              open={openReport}
+                              onClose={handleClose}
+                            >
+                              <DialogTitle>Self Assessment Result</DialogTitle>
+                              <DialogContent>
+                                <List>
+                                  {Array.from(listofQuestions).map(([question, answer], index) => (
+                                    <ListItem key={index}>
+                                      <ListItemText
+                                        primary={question}
+                                        secondary={answer}
+                                        primaryTypographyProps={{ style: styles.primary }}
+                                        secondaryTypographyProps={{ style: styles.secondary }}
+                                      />
+                                    </ListItem>
+                                  ))}
+                                </List>
+                              </DialogContent>
+                            </Dialog>
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              onClick={async () => {
+                                getCounsellorDoctors(window.sessionStorage.getItem("token")).then(
+                                  (val) => {
+                                    setDoctors(val);
+                                  }
+                                );
+                                handleClickOpen(patient.Patient, patient.id);
+                              }}
+                              variant="contained"
+                              color="primary"
+                            >
+                              Action
+                            </Button>
+                            <Dialog
+                              BackdropProps={{
+                                invisible: true,
+                                style: { opacity: 1 },
+                              }}
+                              maxWidth="sm"
+                              fullWidth={true}
+                              PaperProps={{
+                                style: {
+                                  maxHeight: "80vh",
+                                  minHeight: "40vh",
+                                },
+                              }}
+                              open={openAction}
+                              onClose={handleClose}
+                            >
+                              <DialogTitle>Pick an action</DialogTitle>
+                              <DialogContent>
+                                <div>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        name="bookAppointment"
+                                        checked={selectedOption === "bookAppointment"}
+                                        onChange={(event) => handleCheckboxChange(event)}
+                                      />
+                                    }
+                                    label="Book appointment"
+                                    style={{ display: "block" }}
+                                  />
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        name="assign"
+                                        checked={selectedOption === "assign"}
+                                        onChange={(event) => handleCheckboxChange(event)}
+                                      />
+                                    }
+                                    label="Assign a doctor"
+                                    style={{ display: "block" }}
+                                  />
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        name="reject"
+                                        checked={selectedOption === "reject"}
+                                        onChange={(event) => handleCheckboxChange(event)}
+                                      />
+                                    }
+                                    label="Reject"
+                                    style={{ display: "block" }}
+                                  />
+                                  {selectedOption === "bookAppointment" && (
+                                    <>
+                                      <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        required
+                                        fullWidth
+                                        margin="normal"
+                                        InputLabelProps={{
+                                          shrink: true,
+                                          style: { marginTop: "0.2rem" },
+                                        }}
+                                        format="yyyy-MM-dd'T'HH:mm"
+                                        value={formattedDateTime}
+                                        inputProps={{ min: minDateTime }}
+                                        label="Date and Time"
+                                        type="datetime-local"
+                                        onChange={(event) => handleDateTimeChange(event)}
+                                      />
+                                      <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        required
+                                        fullWidth
+                                        margin="none"
+                                        multiline
+                                        rows={4}
+                                        value={description}
+                                        label="Description"
+                                        type="description"
+                                        onChange={(event) => {
+                                          setDescription(event.target.value);
+                                          setErrorMessageAction("");
+                                          setErrorMessageReport("");
+                                          setSuccessMessageAction("");
+                                        }}
+                                      />
+                                    </>
+                                  )}
+                                  {selectedOption === "assign" && (
+                                    <FormControl fullWidth>
+                                      <InputLabel>Doctor Name</InputLabel>
+                                      <Select
+                                        onChange={(event) => {
+                                          setDoctor(event.target.value);
+                                        }}
+                                      >
+                                        {doctors.map((doctor) => {
+                                          return (
+                                            <MenuItem value={doctor}>
+                                              {doctor.first_name + " " + doctor.last_name}
+                                            </MenuItem>
+                                          );
+                                        })}
+                                      </Select>
+                                    </FormControl>
+                                  )}
+                                  {selectedOption === "reject" && (
+                                    <>
+                                      <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        required
+                                        fullWidth
+                                        margin="normal"
+                                        multiline
+                                        rows={4}
+                                        value={description}
+                                        label="Reason for Rejection"
+                                        type="description"
+                                        onChange={(event) => {
+                                          setDescription(event.target.value);
+                                          setErrorMessageReport("");
+                                          setSuccessMessageAction("");
+                                        }}
+                                      />
+                                    </>
+                                  )}
+                                </div>
+                                <Button
+                                  sx={{
+                                    backgroundColor: "#4CAF50",
+                                    color: "#ffffff",
+                                    "&:hover": {
+                                      backgroundColor: "#357a38",
+                                    },
+                                    mr: 2,
+                                    mt: 1,
+                                  }}
+                                  disabled={isSaveDisabled}
+                                  onClick={() => handleAction(event, patient.Patient)}
+                                  variant="contained"
+                                  color="primary"
+                                  margintop="10"
+                                >
+                                  Save
+                                </Button>
+                                {successMessageAction && (
+                                  <Typography color="primary" variant="body1" fontWeight="bold">
+                                    {successMessageAction}
+                                  </Typography>
+                                )}
+                                {errorMessageAction && (
+                                  <Typography color="error" variant="body1" fontWeight="bold">
+                                    {errorMessageAction}
+                                  </Typography>
+                                )}
+                              </DialogContent>
+                            </Dialog>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })
+                )}
+              </TableBody>
+            </Table>
+          ) : (
+            <Typography variant="h6" align="center" sx={{ margin: "16px" }}>
+              No data found
+            </Typography>
+          )}
         </Box>
       </Scrollbar>
       <TablePagination

@@ -177,7 +177,7 @@ export const pendingDoctorSidebarItems = [
 export const managerSidebarItems = [
   {
     title: "Overview",
-    path: "/",
+    path: "../manager/overview",
     icon: (
       <SvgIcon fontSize="small">
         <ChartBarIcon />

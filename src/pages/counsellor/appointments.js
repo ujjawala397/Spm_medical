@@ -44,7 +44,6 @@ const Page = () => {
       setfullPatientList(patients);
       //console.log("Full patient list: " + JSON.stringify(patients));
     };
-  
     getPatientList();
   }, []);
   
@@ -64,16 +63,16 @@ const Page = () => {
     if(!date){
         setError(true)
         //console.log("Full2 " + JSON.stringify(fullPatientList))
-        setfullPatientList(fullPatientList)
-        setPatientList(fullPatientList)
+        await setfullPatientList(fullPatientList)
+        await setPatientList(fullPatientList)
     }
     else {
-      setError(false)
+      await setError(false)
       const token = window.sessionStorage.getItem("token");
       console.log(date + " date");
       const res = await getAllcounsellorAppointmentByDate({date, token});
-      setPatientList(res);
-      setfullPatientList(fullPatientList)
+      await setPatientList(res);
+      await setfullPatientList(fullPatientList)
       //console.log("Full3 " + JSON.stringify(fullPatientList))
     }
   };
@@ -125,9 +124,9 @@ const Page = () => {
           <Button onClick={handleFetchAppointmentsByDate} variant="contained" color="primary" sx={{ margin: '1px 0 0 0' }}>
             View Appointments
           </Button>
-          <Button onClick={handleReset} variant="contained" color="primary" sx={{ margin: '1px 0 0 0' }}>
+          {/* <Button onClick={handleReset} variant="contained" color="primary" sx={{ margin: '1px 0 0 0' }}>
             Reset
-          </Button>
+          </Button> */}
         </Grid>
         <Container maxWidth="xl">
           <Stack spacing={3}>

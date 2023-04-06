@@ -125,9 +125,9 @@ const Page = () => {
           <Button onClick={handleFetchAppointmentsByDate} variant="contained" color="primary" sx={{ margin: '1px 0 0 0' }}>
             View Appointments
           </Button>
-          <Button onClick={handleReset} variant="contained" color="primary" sx={{ margin: '1px 0 0 0' }}>
+          {/* <Button onClick={handleReset} variant="contained" color="primary" sx={{ margin: '1px 0 0 0' }}>
             Reset
-          </Button>
+          </Button> */}
         </Grid>
         <Container maxWidth="xl">
           <Stack spacing={3}>

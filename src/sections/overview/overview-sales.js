@@ -40,11 +40,7 @@ const useChartOptions = () => {
           show: false
         }
       },
-      yaxis: {
-        lines: {
-          show: true
-        }
-      }
+      
     },
     legend: {
       show: false
@@ -72,18 +68,11 @@ const useChartOptions = () => {
         show: true
       },
       categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
+        'Rejected Counselors',
+        'Rejected Patients',
+        'patients  appointment with counselors',
+        'Patients without selfasssessment',
+        '',
       ],
       labels: {
         offsetY: 5,
@@ -94,7 +83,7 @@ const useChartOptions = () => {
     },
     yaxis: {
       labels: {
-        formatter: (value) => (value > 0 ? `${value}K` : `${value}`),
+        formatter: (value) => (value > 0 ? `${value}` : `${value}`),
         offsetX: -10,
         style: {
           colors: theme.palette.text.secondary
@@ -124,7 +113,7 @@ export const OverviewSales = (props) => {
             Sync
           </Button>
         )}
-        title="Sales"
+        title="Data Summary"
       />
       <CardContent>
         <Chart

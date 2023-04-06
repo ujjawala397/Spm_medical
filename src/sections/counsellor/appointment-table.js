@@ -129,121 +129,130 @@ export const PatientsTable = (props) => {
                   <TableCell>Last Name</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Appointment</TableCell>
-                  {/* <TableCell>Modify Appointment</TableCell> */}
+                  <TableCell>Modify Appointment</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {items.map((patient, index) => {
-                  if (patient.Appointment != null && patient.Accept) {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell>{patient.Firstname}</TableCell>
-                        <TableCell>{patient.Lastname}</TableCell>
-                        <TableCell>{patient.Patient}</TableCell>
-                        <TableCell>
-                          {new Date(patient.Appointment)
-                            .toISOString()
-                            .replace("Z", "")
-                            .replace("T", " ")
-                            .replace(".000", "")}
-                        </TableCell>
+                {items.filter((patient) => patient.Accept == true && patient.Appointment != null)
+                  .length == 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      No data found
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  items.map((patient, index) => {
+                    if (patient.Appointment !== null && patient.Accept) {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{patient.Firstname}</TableCell>
+                          <TableCell>{patient.Lastname}</TableCell>
+                          <TableCell>{patient.Patient}</TableCell>
+                          <TableCell>
+                            {new Date(patient.Appointment)
+                              .toISOString()
+                              .replace("Z", "")
+                              .replace("T", " ")
+                              .replace(".000", "")}
+                          </TableCell>
 
-                        {/* <TableCell>
-                          <Button
-                            onClick={async () => handleClickOpen(patient)}
-                            variant="contained"
-                            color="primary"
-                          >
-                            Modify
-                          </Button>
-                          <Dialog
-                            BackdropProps={{
-                              invisible: true,
-                              style: { opacity: 1 },
-                            }}
-                            maxWidth="sm"
-                            fullWidth={true}
-                            PaperProps={{
-                              style: {
-                                maxHeight: "80vh",
-                                minHeight: "40vh",
-                              },
-                            }}
-                            open={openAction}
-                            onClose={handleClose}
-                          >
-                            <DialogTitle>
-                              Select New Date/Time for {patient.Firstname} {patient.Lastname}{" "}
-                            </DialogTitle>
-                            <DialogContent>
-                              <TextField
-                                variant="outlined"
-                                size="small"
-                                required
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{
-                                  shrink: true,
-                                  style: { marginTop: "0.2rem" },
-                                }}
-                                format="yyyy-MM-dd'T'HH:mm"
-                                value={formattedDateTime}
-                                inputProps={{ min: minDateTime }}
-                                label="Date and Time"
-                                type="datetime-local"
-                                onChange={(event) => handleDateTimeChange(event)}
-                              />
-                              <TextField
-                                variant="outlined"
-                                size="small"
-                                required
-                                fullWidth
-                                margin="none"
-                                multiline
-                                rows={4}
-                                value={description}
-                                label="Description"
-                                type="description"
-                                onChange={(event) => {
-                                  setDescription(event.target.value);
-                                  setErrorMessageAction("");
-                                  setSuccessMessageAction("");
-                                }}
-                              />
-                              <Button
-                                sx={{
-                                  backgroundColor: "#4CAF50",
-                                  color: "#ffffff",
-                                  "&:hover": {
-                                    backgroundColor: "#357a38",
-                                  },
-                                  mr: 2,
-                                  mt: 1,
-                                }}
-                                onClick={() => handleModify(event, patient.Patient)}
-                                variant="contained"
-                                color="primary"
-                                margintop="10"
-                              >
-                                Save
-                              </Button>
-                              {successMessageAction && (
-                                <Typography color="primary" variant="body1" fontWeight="bold">
-                                  {successMessageAction}
-                                </Typography>
-                              )}
-                              {errorMessageAction && (
-                                <Typography color="error" variant="body1" fontWeight="bold">
-                                  {errorMessageAction}
-                                </Typography>
-                              )}
-                            </DialogContent>
-                          </Dialog>
-                        </TableCell> */}
-                      </TableRow>
-                    );
-                  }
-                })}
+                          <TableCell>
+                            <Button
+                              onClick={async () => handleClickOpen(patient)}
+                              variant="contained"
+                              color="primary"
+                            >
+                              Modify
+                            </Button>
+                            <Dialog
+                              BackdropProps={{
+                                invisible: true,
+                                style: { opacity: 1 },
+                              }}
+                              maxWidth="sm"
+                              fullWidth={true}
+                              PaperProps={{
+                                style: {
+                                  maxHeight: "80vh",
+                                  minHeight: "40vh",
+                                },
+                              }}
+                              open={openAction}
+                              onClose={handleClose}
+                            >
+                              <DialogTitle>
+                                Select New Date/Time for {patient.Firstname} {patient.Lastname}{" "}
+                              </DialogTitle>
+                              <DialogContent>
+                                <TextField
+                                  variant="outlined"
+                                  size="small"
+                                  required
+                                  fullWidth
+                                  margin="normal"
+                                  InputLabelProps={{
+                                    shrink: true,
+                                    style: { marginTop: "0.2rem" },
+                                  }}
+                                  format="yyyy-MM-dd'T'HH:mm"
+                                  value={formattedDateTime}
+                                  inputProps={{ min: minDateTime }}
+                                  label="Date and Time"
+                                  type="datetime-local"
+                                  onChange={(event) => handleDateTimeChange(event)}
+                                />
+                                <TextField
+                                  variant="outlined"
+                                  size="small"
+                                  required
+                                  fullWidth
+                                  margin="none"
+                                  multiline
+                                  rows={4}
+                                  value={description}
+                                  label="Description"
+                                  type="description"
+                                  onChange={(event) => {
+                                    setDescription(event.target.value);
+                                    setErrorMessageAction("");
+                                    setSuccessMessageAction("");
+                                  }}
+                                />
+                                <Button
+                                  sx={{
+                                    backgroundColor: "#4CAF50",
+                                    color: "#ffffff",
+                                    "&:hover": {
+                                      backgroundColor: "#357a38",
+                                    },
+                                    mr: 2,
+                                    mt: 1,
+                                  }}
+                                  onClick={() => handleModify(event, patient.Patient)}
+                                  variant="contained"
+                                  color="primary"
+                                  margintop="10"
+                                >
+                                  Save
+                                </Button>
+                                {successMessageAction && (
+                                  <Typography color="primary" variant="body1" fontWeight="bold">
+                                    {successMessageAction}
+                                  </Typography>
+                                )}
+                                {errorMessageAction && (
+                                  <Typography color="error" variant="body1" fontWeight="bold">
+                                    {errorMessageAction}
+                                  </Typography>
+                                )}
+                              </DialogContent>
+                            </Dialog>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })
+                )}
               </TableBody>
             </Table>
           ) : (

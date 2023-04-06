@@ -18,8 +18,11 @@ import {
 } from "@mui/material";
 
 import { Scrollbar } from "src/components/scrollbar";
+import { getSelfAssessment, putCounsellorPatients } from "src/api/Api";
 import { useState, useEffect } from "react";
-import { putPatientCounselorAppointment, putPatientDoctorAppointment } from "src/api/Api";
+import { useRouter } from "next/navigation";
+import { convertToList } from "src/data/selfassessmentmap";
+import { putDoctorPatients } from "src/api/Api";
 
 export const PatientsTable = (props) => {
   const {
@@ -39,30 +42,22 @@ export const PatientsTable = (props) => {
   const formattedDateTime = null;
   const minDateTime = new Date().toISOString().slice(0, -8);
   const [token, setToken] = useState("");
-  const [role, setRole] = useState("");
   const [openAction, setOpenAction] = useState(false);
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
   const [email, setEmail] = useState("");
   const [id, setId] = useState("");
 
-
   const [errorMessageAction, setErrorMessageAction] = useState("");
   const [successMessageAction, setSuccessMessageAction] = useState("");
 
-  const handleClickOpen = (appointment, appointmentId) => {
-    console.log("Appointment: " + JSON.stringify(appointment))
-    if (appointment.hasOwnProperty('AssigntoDoctor')) {
-      setRole('counselor')
-      //console.log("counselor " + JSON.stringify(appointment)); 
-    } else {
-      setRole('doctor')
-      //console.log("doctor " + JSON.stringify(appointment));
-    }
-    setId(appointmentId);
-    //console.log("ID " + id);
+  const handleClickOpen = (patient) => {
     setOpenAction(true);
     setToken(window.sessionStorage.getItem("token"));
+    setEmail(patient.Patient);
+    setId(patient.id);
+    console.log(patient.Patient + " Email");
+    console.log(patient.id + " Id");
   };
 
   const handleDateTimeChange = (event) => {
@@ -89,55 +84,35 @@ export const PatientsTable = (props) => {
     setOpenAction(false);
   };
 
-  const handleReject = async () => {
-    if (description.length === 0) {
+  const handleModify = async () => {
+    console.log(email + " Email");
+    console.log(id + " Id");
+    if (description.length === 0 || !date) {
       setErrorMessageAction("Fill the required information before saving");
     } else {
       const data = {
         id: id,
-        Accept: false,
+        Patient: email,
+        Appointment: date,
+        Accept: true,
         Description: description,
       };
 
-      if(role === "doctor"){
-        const response = await putPatientDoctorAppointment(data, token);
-        //console.log("ResponseDoc " + JSON.stringify(response))
-        if (response.Error) {
-          setErrorMessageAction(response.Error);
-          setSuccessMessageAction("");
-        } else if (response[0].id) {
-          setErrorMessageAction("");
-          setSuccessMessageAction(
-            "Appointment has been rejected!"
-          );
-        } else {
-          setErrorMessageAction(
-            "Action Failed. Something went wrong. Please contact the administrator"
-          );
-          setSuccessMessageAction("");
-        }
+      const response = await putCounsellorPatients(data, token);
+      if (response.Error) {
+        setErrorMessageAction(response.Error);
+        setSuccessMessageAction("");
+      } else if (response.id || response.detail) {
+        setErrorMessageAction("");
+        setSuccessMessageAction(
+          "The appointment has been modified to " + new Date(date).toLocaleString()
+        );
+      } else {
+        setErrorMessageAction(
+          "Action Failed. Something went wrong. Please contact the administrator"
+        );
+        setSuccessMessageAction("");
       }
-      else {
-        const response = await putPatientCounselorAppointment(data, token);
-        //console.log("ResponseCounselor " + JSON.stringify(response))
-        if (response.Error) {
-          setErrorMessageAction(response.Error);
-          setSuccessMessageAction("");
-        } else if (response[0].id) {
-          setErrorMessageAction("");
-          setSuccessMessageAction(
-            "Patient has been rejected!"
-          );
-        } else {
-          setErrorMessageAction(
-            "Action Failed. Something went wrong. Please contact the administrator"
-          );
-          setSuccessMessageAction("");
-        }
-      }
-      
-
-      
     }
     setDescription("");
   };
@@ -150,61 +125,44 @@ export const PatientsTable = (props) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Id</TableCell>
-                  <TableCell>Patient</TableCell>
-                  <TableCell>Doctor</TableCell>
-                  <TableCell>Counsellor</TableCell>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell>Email</TableCell>
                   <TableCell>Appointment</TableCell>
-                  <TableCell>Reject Appointment</TableCell>
+                  <TableCell>Modify Appointment</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {items &&
-                  items.map((appointment, idx) => {
-                    const reversedIdx = items.length - idx - 1;
-                    if (appointment && new Date(items[reversedIdx].Appointment)
-                    .toISOString()
-                    .replace("Z", "")
-                    .replace("T", " ")
-                    .replace(".000", "") !== "1970-01-01 00:00:00") {
+                {items.filter((patient) => patient.Accept == true && patient.Appointment != null)
+                  .length == 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      No data found
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  items.map((patient, index) => {
+                    if (patient.Appointment !== null && patient.Accept) {
                       return (
-                        <TableRow>
+                        <TableRow key={index}>
+                          <TableCell>{patient.Firstname}</TableCell>
+                          <TableCell>{patient.Lastname}</TableCell>
+                          <TableCell>{patient.Patient}</TableCell>
                           <TableCell>
-                            <Typography variant="containerd">{idx + 1}</Typography>
+                            {new Date(patient.Appointment)
+                              .toISOString()
+                              .replace("Z", "")
+                              .replace("T", " ")
+                              .replace(".000", "")}
                           </TableCell>
+
                           <TableCell>
-                            <Typography variant="containerd">
-                              {items[reversedIdx].Patient}
-                            </Typography>
-                          </TableCell>
-                          <TableCell>
-                            <Typography variant="containerd">
-                              {items[reversedIdx].Doctor ? items[reversedIdx].Doctor : "N/A"}
-                            </Typography>
-                          </TableCell>
-                          <TableCell>
-                            <Typography variant="containerd">
-                              {items[reversedIdx].Counselor ? items[reversedIdx].Counselor : "N/A"}
-                            </Typography>
-                          </TableCell>
-                          <TableCell>
-                            <Typography variant="containerd">
-                              {new Date(items[reversedIdx].Appointment)
-                                .toISOString()
-                                .replace("Z", "")
-                                .replace("T", " ")
-                                .replace(".000", "")}
-                            </Typography>
-                          </TableCell>
-                          <TableCell>
-                            {" "}
                             <Button
-                              onClick={async () => handleClickOpen(items[reversedIdx], items[reversedIdx].id)}
+                              onClick={async () => handleClickOpen(patient)}
                               variant="contained"
-                              color="error"
-                              disabled={items[reversedIdx].RejectedByPatient}
+                              color="primary"
                             >
-                              Reject
+                              Modify
                             </Button>
                             <Dialog
                               BackdropProps={{
@@ -222,8 +180,27 @@ export const PatientsTable = (props) => {
                               open={openAction}
                               onClose={handleClose}
                             >
-                              <DialogTitle>Add a reason for Rejection</DialogTitle>
+                              <DialogTitle>
+                                Select New Date/Time for {patient.Firstname} {patient.Lastname}{" "}
+                              </DialogTitle>
                               <DialogContent>
+                                <TextField
+                                  variant="outlined"
+                                  size="small"
+                                  required
+                                  fullWidth
+                                  margin="normal"
+                                  InputLabelProps={{
+                                    shrink: true,
+                                    style: { marginTop: "0.2rem" },
+                                  }}
+                                  format="yyyy-MM-dd'T'HH:mm"
+                                  value={formattedDateTime}
+                                  inputProps={{ min: minDateTime }}
+                                  label="Date and Time"
+                                  type="datetime-local"
+                                  onChange={(event) => handleDateTimeChange(event)}
+                                />
                                 <TextField
                                   variant="outlined"
                                   size="small"
@@ -251,7 +228,7 @@ export const PatientsTable = (props) => {
                                     mr: 2,
                                     mt: 1,
                                   }}
-                                  onClick={handleReject}
+                                  onClick={() => handleModify(event, patient.Patient)}
                                   variant="contained"
                                   color="primary"
                                   margintop="10"
@@ -274,7 +251,8 @@ export const PatientsTable = (props) => {
                         </TableRow>
                       );
                     }
-                  })}
+                  })
+                )}
               </TableBody>
             </Table>
           ) : (

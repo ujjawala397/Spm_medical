@@ -1,3 +1,7 @@
+## 0.3.5
+
+- fix: Counselor and Patient Appointment UI Display
+
 ## 0.3.4
 
 - feature: Doctor patient management

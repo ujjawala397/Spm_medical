@@ -23,8 +23,17 @@ export const ALL_SELF_ASSESSMENT = BASE_URL + "/getallselfassessment";
 //Get All Detail
 export const GET_ALL_DATA = BASE_URL + "/patient/selfassessmentGetAllDetail";
 
-//Get list of Appointments Patient have
-export const PATIENT_GET_ALL_COUNSELOR_APPOINTMENT = BASE_URL + "/patient/counsellor/getallappointment";
+export const GET_PATIENT_COUNSELOR_APPOINTMENT = BASE_URL + "/patient/counsellor/getallappointment";
+
+export const GET_PATIENT_COUNSELOR_ALL_APPOINTMENT = BASE_URL + "/patient/counsellor/getallappointment";
+
+export const PUT_PATIENT_COUNSELOR_APPOINTMENT = BASE_URL + "/patient/reject/appointment/counselor";
+
+export const GET_PATIENT_DOCTOR_APPOINTMENT = BASE_URL + "/patient/doctor/getallappointment";
+
+export const GET_PATIENT_DOCTOR_ALL_APPOINTMENT = BASE_URL + "/patient/doctor/getallappointment";
+
+export const PUT_PATIENT_DOCTOR_APPOINTMENT = BASE_URL + "/patient/reject/appointment/doctor";
 
 
 /******************************************** COUNSELOR *******************************************/

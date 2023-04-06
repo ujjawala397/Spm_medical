@@ -18,12 +18,17 @@ import {
   GET_COUNSELLOR_DOCTORS,
   COUNSELLOR_GET_ALL_APPOINTMENT,
   DOCTOR_GET_ALL_APPOINTMENT,
-  PATIENT_GET_ALL_COUNSELOR_APPOINTMENT,
   COUNSELLOR_ASSIGN_PATIENT_TO_DOCTOR,
   DOCTOR_MANAGE_ASSIGNED_PATIENT,
   MANAGER_ACCEPT_REJECT_DOCTORS,
   MANAGER_ACCEPT_REJECT_COUNSELLORS,
   MANAGER_ACCEPT_REJECT_PATIENTS,
+  GET_PATIENT_COUNSELOR_APPOINTMENT,
+  GET_PATIENT_COUNSELOR_ALL_APPOINTMENT,
+  GET_PATIENT_DOCTOR_APPOINTMENT,
+  GET_PATIENT_DOCTOR_ALL_APPOINTMENT,
+  PUT_PATIENT_COUNSELOR_APPOINTMENT,
+  PUT_PATIENT_DOCTOR_APPOINTMENT,
   BUSINESS_DATA,
 } from "./Url";
 
@@ -129,8 +134,34 @@ export async function putDoctorPatients(data, token) {
 
 /******************************************** PATIENT *******************************************/
 
-export async function getAllPatientAppointmentByDate(token) {
-  let responseData = await getRequestWithHeader(PATIENT_GET_ALL_COUNSELOR_APPOINTMENT, token);
+
+export async function getAllPatientCounselorAppointment(token) {
+  let responseData = await getRequestWithHeader(GET_PATIENT_COUNSELOR_APPOINTMENT, token);
+  return responseData;
+}
+
+export async function getAllPatientCounselorAppointmentByDate({
+  url = GET_PATIENT_COUNSELOR_ALL_APPOINTMENT,
+  date,
+  token,
+}) {
+  url = url + "?appointment=" + date;
+  let responseData = await getRequestWithHeaderData(url, token);
+  return responseData;
+}
+
+export async function getAllPatientDoctorAppointment(token) {
+  let responseData = await getRequestWithHeader(GET_PATIENT_DOCTOR_APPOINTMENT, token);
+  return responseData;
+}
+
+export async function getAllPatientDoctorAppointmentByDate({
+  url = GET_PATIENT_DOCTOR_ALL_APPOINTMENT,
+  date,
+  token,
+}) {
+  url = url + "?appointment=" + date;
+  let responseData = await getRequestWithHeaderData(url, token);
   return responseData;
 }
 
@@ -143,6 +174,16 @@ export async function getSelfAssessment({ url = ALL_SELF_ASSESSMENT, token, emai
   url = url + "?email=" + email;
   console.log("Request Body : " + url);
   const responseData = await getRequestWithHeaderData(url, token);
+  return responseData;
+}
+
+export async function putPatientCounselorAppointment(data, token) {
+  let responseData = await putRequest(PUT_PATIENT_COUNSELOR_APPOINTMENT, data, token);
+  return responseData;
+}
+
+export async function putPatientDoctorAppointment(data, token) {
+  let responseData = await putRequest(PUT_PATIENT_DOCTOR_APPOINTMENT, data, token);
   return responseData;
 }
 

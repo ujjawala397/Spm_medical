@@ -4,8 +4,8 @@ import { Box, Button, Container, Stack, Grid, TextField, Typography, FormHelperT
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { applyPagination } from "src/utils/apply-pagination";
-import { PatientsTable } from "src/sections/doctors/appointment-table";
-import { getDoctorPatients, getAllDoctorAppointmentByDate } from "src/api/Api";
+import { PatientsTable } from "src/sections/counsellor/appointment-table";
+import { getCounsellorPatients, getAllcounsellorAppointmentByDate } from "src/api/Api";
 
 const now = new Date();
 
@@ -39,12 +39,11 @@ const Page = () => {
 
   useEffect(() => {
     const getPatientList = async () => {
-      const patients = await getDoctorPatients(window.sessionStorage.getItem("token"));
+      const patients = await getCounsellorPatients(window.sessionStorage.getItem("token"));
       setPatientList(patients);
       setfullPatientList(patients);
       //console.log("Full patient list: " + JSON.stringify(patients));
     };
-  
     getPatientList();
   }, []);
   
@@ -64,16 +63,16 @@ const Page = () => {
     if(!date){
         setError(true)
         //console.log("Full2 " + JSON.stringify(fullPatientList))
-        setfullPatientList(fullPatientList)
-        setPatientList(fullPatientList)
+        await setfullPatientList(fullPatientList)
+        await setPatientList(fullPatientList)
     }
     else {
-      setError(false)
+      await setError(false)
       const token = window.sessionStorage.getItem("token");
       console.log(date + " date");
-      const res = await getAllDoctorAppointmentByDate({date, token});
-      setPatientList(res);
-      setfullPatientList(fullPatientList)
+      const res = await getAllcounsellorAppointmentByDate({date, token});
+      await setPatientList(res);
+      await setfullPatientList(fullPatientList)
       //console.log("Full3 " + JSON.stringify(fullPatientList))
     }
   };

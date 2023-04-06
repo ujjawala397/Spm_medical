@@ -29,7 +29,7 @@ const Page = () => {
     <>
     <Head>
       <title>
-        Overview | Devias Kit
+        Overview | Medical Line
       </title>
     </Head>
     <Box
